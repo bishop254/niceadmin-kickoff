@@ -23,36 +23,36 @@ export class SidebarComponent implements OnInit {
         link: '/user-profile',
         icon: "bi bi-person",
       },
+      // {
+      //   title: "Blank Page",
+      //   link: 'blank-page',
+      //   icon: "bi bi-file-earmark",
+      // },
+      // {
+      //   title: "Login",
+      //   link: '/login',
+      //   icon: "bi bi-box-arrow-in-right",
+      // },
       {
-        title: "Blank Page",
-        link: 'blank-page',
-        icon: "bi bi-file-earmark",
-      },
-      {
-        title: "Login",
-        link: '/login',
-        icon: "bi bi-box-arrow-in-right",
-      },
-      {
-        title:"Submenu Demo",
+        title:"Bursaries",
         link:"",
         icon:"bi bi-subtract",
         childs:[
           {
-            title: "Dashboard",
-            link: '/dashboard',
+            title: "List Bursaries",
+            link: '/bursary/list-bursaries',
             icon: "bi bi-circle",
           },
-          {
-            title: "Blank Page",
-            link: 'blank-page',
-            icon: "bi bi-circle",
-          },
-          {
-            title: "Login",
-            link: '/login',
-            icon: "bi bi-circle",
-          },
+          // {
+          //   title: "Blank Page",
+          //   link: 'blank-page',
+          //   icon: "bi bi-circle",
+          // },
+          // {
+          //   title: "Login",
+          //   link: '/login',
+          //   icon: "bi bi-circle",
+          // },
         ]
       }
     ];

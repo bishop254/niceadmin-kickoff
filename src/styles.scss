@@ -1,3 +1,12 @@
 @import 'bootstrap/scss/bootstrap.scss';
 @import 'bootstrap-icons/font/bootstrap-icons.scss';
 @import 'assets/style.scss';
+/* Importing Bootstrap SCSS file. */
+@import "./node_modules/bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+
+//Toastr Styling
+@import 'ngx-toastr/toastr-bs5-alert';

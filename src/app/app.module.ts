@@ -11,13 +11,22 @@ import { MinComponent } from './layouts/min.component';
 import { DashboardLayoutComponent } from './layouts/dashboardlayout.component';
 import { HeaderComponent } from './layouts/parts/header.component';
 import { SidebarComponent } from './layouts/parts/sidebar.component';
-import { SidebaritemComponent, SidebaritemInnerComponent } from './layouts/parts/sidebaritem.component';
+import {
+  SidebaritemComponent,
+  SidebaritemInnerComponent,
+} from './layouts/parts/sidebaritem.component';
 import { BlankPageComponent } from './blank-page/blank-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { ErrorComponent } from './error/error.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { ToastrModule } from 'ngx-toastr';
+import { HttpCallsInterceptor } from './shared/interceptors/http-calls.interceptor';
 
 @NgModule({
   declarations: [
@@ -27,12 +36,12 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     MinComponent,
     DashboardLayoutComponent,
     SidebaritemComponent,
-	SidebaritemInnerComponent,
+    SidebaritemInnerComponent,
     BlankPageComponent,
     DashboardComponent,
     LoginComponent,
     ErrorComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,9 +49,19 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     BsDropdownModule.forRoot(),
     CollapseModule.forRoot(),
     TabsModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ProgressbarModule.forRoot(),
+    ToastrModule.forRoot()
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpCallsInterceptor,
+    multi: true
+  }],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

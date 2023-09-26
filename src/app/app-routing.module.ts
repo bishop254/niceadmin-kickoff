@@ -7,7 +7,7 @@ import { DashboardLayoutComponent } from './layouts/dashboardlayout.component';
 import { MinComponent } from './layouts/min.component';
 import { LoginComponent } from './login/login.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-
+import { ListBursariesComponent } from './pages/bursary/list-bursaries/list-bursaries.component';
 
 const routes: Routes = [
   {
@@ -16,17 +16,22 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: DashboardComponent
+        component: DashboardComponent,
       },
       {
         path: 'blank-page',
-        component: BlankPageComponent
+        component: BlankPageComponent,
       },
       {
         path: 'user-profile',
-        component: UserProfileComponent
-      }
-    ]
+        component: UserProfileComponent,
+      },
+      {
+        path: 'bursary',
+        loadChildren: () =>
+          import('./pages/bursary/bursary.module').then((m) => m.BursaryModule),
+      },
+    ],
   },
   {
     path: '',
@@ -34,18 +39,18 @@ const routes: Routes = [
     children: [
       {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
       },
       {
         path: 'error',
-        component: ErrorComponent
+        component: ErrorComponent,
       },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
