@@ -55,13 +55,15 @@ import { HttpCallsInterceptor } from './shared/interceptors/http-calls.intercept
     ReactiveFormsModule,
     FormsModule,
     ProgressbarModule.forRoot(),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: HttpCallsInterceptor,
-    multi: true
-  }],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpCallsInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

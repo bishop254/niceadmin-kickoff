@@ -340,35 +340,36 @@ export class CustomTblComponent {
 
     tempCol.forEach((col: any, idx: number) => {
       if (
-        col.name !== "Actions" &&
-        col.name !== "Status" &&
-        col.name !== "Blocked" &&
-        col.name !== "Active" &&
-        col.name !== "ID" &&
-        col.name !== "#" &&
-        col.prop !== "systemRole" &&
-        col.prop !== "createdOn" &&
-        col.prop !== "createdAt" &&
-        col.prop !== "updatedAt" &&
-        col.prop !== "firstTimeLogin" &&
-        col.prop !== "updatedOn" &&
-        col.prop !== "approved" &&
-        col.prop !== "assigned" &&
-        col.prop !== "deviceStatus" &&
-        col.prop !== "taskStatus" &&
-        col.prop !== "resStatus" &&
-        col.prop !== "reqStatus" &&
-        col.prop !== "applStatus" &&
-        col.prop !== "stanStatus" &&
-        col.prop !== "channel"
+        col.name !== 'Actions' &&
+        col.name !== 'Status' &&
+        col.name !== 'Blocked' &&
+        col.name !== 'Active' &&
+        col.name !== 'ID' &&
+        col.name !== '#' &&
+        col.prop !== 'systemRole' &&
+        col.prop !== 'createdOn' &&
+        col.prop !== 'gender' &&
+        col.prop !== 'createdAt' &&
+        col.prop !== 'updatedAt' &&
+        col.prop !== 'firstTimeLogin' &&
+        col.prop !== 'updatedOn' &&
+        col.prop !== 'approved' &&
+        col.prop !== 'assigned' &&
+        col.prop !== 'deviceStatus' &&
+        col.prop !== 'taskStatus' &&
+        col.prop !== 'resStatus' &&
+        col.prop !== 'reqStatus' &&
+        col.prop !== 'applStatus' &&
+        col.prop !== 'stanStatus' &&
+        col.prop !== 'channel'
       ) {
-        col["maxW"] =
-          col.name == "National ID"
+        col['maxW'] =
+          col.name == 'National ID'
             ? 200
-            : col.name == "Views" || col.name == "Downloads"
+            : col.name == 'Views' || col.name == 'Downloads'
             ? 100
             : 800;
-        col["minW"] = col.name == "Email" ? 240 : 90;
+        col['minW'] = col.name == 'Email' ? 240 : 90;
 
         this.plainColumns.push(col);
         tempCol.splice(idx, 1, {});

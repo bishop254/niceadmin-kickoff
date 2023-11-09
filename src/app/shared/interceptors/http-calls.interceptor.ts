@@ -25,7 +25,7 @@ export class HttpCallsInterceptor implements HttpInterceptor {
       request = request.clone({
         withCredentials: true,
       });
-    }
+    } 
     return next.handle(request);
   }
 }

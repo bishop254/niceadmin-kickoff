@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import {
   Observable,
+  of,
   Subscription,
   map,
   catchError,
   TimeoutError,
-  of,
 } from 'rxjs';
 import { GlobalServService } from 'src/app/shared/services/global-serv.service';
 import { HttpServService } from 'src/app/shared/services/http-serv.service';
-import { AddEditBursaryComponent } from '../add-edit-bursary/add-edit-bursary.component';
+import { AddEditBursaryComponent } from '../../bursary/add-edit-bursary/add-edit-bursary.component';
 
 @Component({
-  selector: 'app-list-bursaries',
-  templateUrl: './list-bursaries.component.html',
-  styleUrls: ['./list-bursaries.component.scss'],
+  selector: 'app-view-student',
+  templateUrl: './view-student.component.html',
+  styleUrls: ['./view-student.component.scss'],
 })
-export class ListBursariesComponent {
+export class ViewStudentComponent {
   loading: boolean = true;
 
   rows: any = [];
@@ -51,13 +51,23 @@ export class ListBursariesComponent {
   totalRecords: number = 0;
 
   subs: Subscription[] = [];
+  studAdmNo: string = '';
+
+  studDetails: any;
+
   constructor(
     private httpService: HttpServService,
     private globalService: GlobalServService,
     private toastr: ToastrService,
     private router: Router,
+    private route: ActivatedRoute,
     private modalService: BsModalService
-  ) {}
+  ) {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.studAdmNo = params.get('id')!.toString();
+      console.log(this.studAdmNo);
+    });
+  }
   ngOnDestroy(): void {
     this.subs.forEach((sb) => sb.unsubscribe());
   }
@@ -75,125 +85,30 @@ export class ListBursariesComponent {
       size: size,
     };
 
-    this.bursariesList$ = this.httpService.getReq('bursary/bursaries').pipe(
-      map((resp: any) => {
-        console.log(resp);
-        console.log(resp);
+    this.bursariesList$ = this.httpService
+      .getReq(`bursary/student/${this.studAdmNo}`)
+      .pipe(
+        map((resp: any) => {
+          console.log(resp);
+          console.log(resp);
+          this.studDetails = resp;
+          console.log(this.studDetails);
 
-        // this.rows = [
-        //   {
-        //     bursary_name: 'Scholarship 1',
-        //     bursary_description: 'This is the description for Scholarship 1.',
-        //     bursary_amount: 1000,
-        //     criteria: 'GPA of 3.5 or higher',
-        //     application_start_date: '2023-01-15',
-        //     application_end_date: '2023-02-15',
-        //     review_start_date: '2023-02-20',
-        //     review_end_date: '2023-03-05',
-        //     notification_date: '2023-03-10',
-        //     disbursement_date: '2023-04-01',
-        //     status: 'Open',
-        //   },
-        //   {
-        //     bursary_name: 'Grant 1',
-        //     bursary_description: 'This is the description for Grant 1.',
-        //     bursary_amount: 500,
-        //     criteria: 'Financial need-based',
-        //     application_start_date: '2023-02-01',
-        //     application_end_date: '2023-03-01',
-        //     review_start_date: '2023-03-10',
-        //     review_end_date: '2023-03-20',
-        //     notification_date: '2023-03-25',
-        //     disbursement_date: '2023-04-15',
-        //     status: 'Closed',
-        //   },
-        //   {
-        //     bursary_name: 'Fellowship 1',
-        //     bursary_description: 'This is the description for Fellowship 1.',
-        //     bursary_amount: 1500,
-        //     criteria: 'Research excellence',
-        //     application_start_date: '2023-03-15',
-        //     application_end_date: '2023-04-15',
-        //     review_start_date: '2023-04-20',
-        //     review_end_date: '2023-05-05',
-        //     notification_date: '2023-05-10',
-        //     disbursement_date: '2023-06-01',
-        //     status: 'Open',
-        //   },
-        //   {
-        //     bursary_name: 'Scholarship 2',
-        //     bursary_description: 'This is the description for Scholarship 2.',
-        //     bursary_amount: 1200,
-        //     criteria: 'Community involvement',
-        //     application_start_date: '2023-01-10',
-        //     application_end_date: '2023-02-10',
-        //     review_start_date: '2023-02-15',
-        //     review_end_date: '2023-02-28',
-        //     notification_date: '2023-03-05',
-        //     disbursement_date: '2023-03-30',
-        //     status: 'Closed',
-        //   },
-        //   {
-        //     bursary_name: 'Grant 2',
-        //     bursary_description: 'This is the description for Grant 2.',
-        //     bursary_amount: 750,
-        //     criteria: 'STEM majors only',
-        //     application_start_date: '2023-02-05',
-        //     application_end_date: '2023-03-05',
-        //     review_start_date: '2023-03-15',
-        //     review_end_date: '2023-03-30',
-        //     notification_date: '2023-04-05',
-        //     disbursement_date: '2023-04-25',
-        //     status: 'Open',
-        //   },
-        // ];
-        // return this.rows
-
-        if (resp.length >= 1) {
-          let response = resp;
-
-          this.rows = response.map((item: any, index: any) => {
-            item['application_start_date'] = this.globalService.formatDate(
-              item['application_start_date']
-            );
-            item['review_start_date'] = this.globalService.formatDate(
-              item['review_start_date']
-            );
-            item['disbursement_date'] = this.globalService.formatDate(
-              item['disbursement_date']
-            );
-            const res = {
-              ...item,
-              frontendId: index + 1,
-            };
-
-            return res;
-          });
-
-          this.rows = this.rows.filter((row: any) => row !== undefined);
-
-          this.totalRecords = this.rows.length;
-
+          return this.studDetails;
+        }),
+        catchError((error: any) => {
           this.loading = false;
-          return this.rows;
-        } else {
-          this.loading = false;
+          if (error instanceof TimeoutError) {
+            this.toastr.error(error['message'], 'API Timeout');
+          } else {
+            this.toastr.error(
+              error['statusText'] || error['message'],
+              'Data Not Fetched'
+            );
+          }
           return of([]);
-        }
-      }),
-      catchError((error: any) => {
-        this.loading = false;
-        if (error instanceof TimeoutError) {
-          this.toastr.error(error['message'], 'API Timeout');
-        } else {
-          this.toastr.error(
-            error['statusText'] || error['message'],
-            'Data Not Fetched'
-          );
-        }
-        return of([]);
-      })
-    );
+        })
+      );
   }
 
   updateColumns(updatedColumns: any) {
@@ -229,7 +144,7 @@ export class ListBursariesComponent {
     this.bsModalRef.content.closeBtnName = 'Close';
     this.bsModalRef.content.isEdit = false;
 
-    this.bsModalRef.onHide?.emit((val: any) => {
+    this.bsModalRef.onHidden?.emit((val: any) => {
       console.log(val);
       this.getIndividualData();
     });

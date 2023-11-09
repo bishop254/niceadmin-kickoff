@@ -1,0 +1,135 @@
+<div class="pagetitle">
+  <h1>Student Page</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a routerLink="/bursary/students">All Students</a>
+      </li>
+      <li class="breadcrumb-item active">Student</li>
+    </ol>
+  </nav>
+</div>
+
+<section class="section" *ngIf="bursariesList$ | async">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ studDetails["full_name"] }}</h5>
+          <p>
+            <strong>Gender : </strong>
+            <span
+              class="{{
+                studDetails['gender'] === 'M'
+                  ? 'badge bg-success mr-1'
+                  : 'badge bg-primary mr-1'
+              }}"
+            >
+              {{ studDetails["gender"] === "M" ? "Male" : "Female" }}
+            </span>
+          </p>
+          <p><strong>Phone : </strong> {{ studDetails["phone"] }}</p>
+          <p>
+            <strong>Date of Birth : </strong> {{ studDetails["dob"] | date }}
+          </p>
+          <p>
+            <strong>Disabled : </strong>
+            <span
+              class="{{
+                studDetails['disabled'] !== true
+                  ? 'badge bg-success mr-1'
+                  : 'badge bg-danger mr-1'
+              }}"
+            >
+              {{ studDetails["disabled"] == true ? "Yes" : "No" }}
+            </span>
+          </p>
+          <p>
+            <strong>Year of Study : </strong> {{ studDetails["year_of_study"] }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">School</h5>
+          <p>
+            <strong>School/Institution :</strong> {{ studDetails["school"] }}
+          </p>
+          <p>
+            <strong>Bank Name :</strong> {{ studDetails["school_bank_name"] }}
+          </p>
+          <p>
+            <strong>Bank Account No :</strong>
+            {{ studDetails["school_bank_account_no"] }}
+          </p>
+          <p>
+            <strong>Bank Branch :</strong>
+            {{ studDetails["school_bank_branch"] }}
+          </p>
+          <p>
+            <strong>Fee Balance(KES) : </strong>
+            <span class="badge bg-primary mr-1">
+              {{ studDetails["fee_balance"] }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Parents/Guardians</h5>
+          <p>
+            <strong>Parent Status : </strong>
+            <span
+              class="{{
+                studDetails['parent_state'] !== true
+                  ? 'badge bg-success mr-1'
+                  : 'badge bg-danger mr-1'
+              }}"
+            >
+              {{ studDetails["parent_state"] == true ? "Yes" : "No" }}
+            </span>
+          </p>
+          <p>
+            <strong>Orphan Status :</strong> {{ studDetails["orphan_state"] }}
+          </p>
+          <p>
+            <strong>Grand Parent Status :</strong>
+            {{ studDetails["grand_parent_care_state"] }}
+          </p>
+          <hr />
+          <p>
+            <strong>Father Guardian name :</strong>
+            {{ studDetails["father_guardian_name"] }}
+          </p>
+          <p>
+            <strong>Father Guardian occupation :</strong>
+            {{ studDetails["father_guardian_occupation"] }}
+          </p>
+          <p>
+            <strong>Father Guardian phone :</strong>
+            {{ studDetails["father_guardian_phone"] }}
+          </p>
+          <hr />
+          <p>
+            <strong>Mother Guardian name :</strong>
+            {{ studDetails["mother_guardian_name"] }}
+          </p>
+          <p>
+            <strong>Mother Guardian occupation :</strong>
+            {{ studDetails["mother_guardian_occupation"] }}
+          </p>
+          <p>
+            <strong>Mother Guardian phone :</strong>
+            {{ studDetails["mother_guardian_phone"] }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

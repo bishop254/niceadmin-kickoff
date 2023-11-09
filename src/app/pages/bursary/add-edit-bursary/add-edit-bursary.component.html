@@ -1,0 +1,135 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ title }}</h4>
+  <button
+    type="button"
+    class="btn-close close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="m-2" [formGroup]="bursaryForm">
+    <div class="form-group">
+      <label for="bursaryName">Bursary Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="bursaryName"
+        placeholder="Enter bursary name"
+        formControlName="bursary_name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="bursaryDescription">Bursary Description</label>
+      <textarea
+        class="form-control"
+        id="bursaryDescription"
+        rows="3"
+        placeholder="Enter bursary description"
+        formControlName="bursary_description"
+      ></textarea>
+    </div>
+    <div class="form-group">
+      <label for="bursaryAmount">Bursary Amount(KES)</label>
+      <input
+        type="number"
+        class="form-control"
+        id="bursaryAmount"
+        placeholder="Enter bursary amount"
+        formControlName="bursary_amount"
+      />
+    </div>
+    <div class="form-group">
+      <label for="criteria">Criteria</label>
+      <input
+        type="text"
+        class="form-control"
+        id="criteria"
+        placeholder="Enter criteria"
+        formControlName="criteria"
+      />
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="applicationStartDate">Application Start Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="applicationStartDate"
+            formControlName="application_start_date"
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="applicationEndDate">Application End Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="applicationEndDate"
+            formControlName="application_end_date"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="reviewStartDate">Review Start Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="reviewStartDate"
+            formControlName="review_start_date"
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="reviewEndDate">Review End Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="reviewEndDate"
+            formControlName="review_end_date"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="notificationDate">Notification Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="notificationDate"
+            formControlName="notification_date"
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="disbursementDate">Disbursement Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="disbursementDate"
+            formControlName="disbursement_date"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="submit()">
+    Submit
+  </button>
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">
+    {{ closeBtnName }}
+  </button>
+</div>

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GlobalServService } from './global-serv.service';
+// import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,8 @@ export class HttpServService {
   public userRoles$ = this.userRolesSource.asObservable();
   constructor(
     private http: HttpClient,
-    private globalService: GlobalServService
+    private globalService: GlobalServService,
+    // public jwtHelper: JwtHelperService
   ) {}
 
   public updateRoles(roles: any) {
@@ -39,4 +41,11 @@ export class HttpServService {
   public postReqJwt(endpoint: string, model: any): Observable<Object> {
     return this.http.post(this.globalService.apiHost + endpoint, model);
   }
+
+  // public isAuthenticated(): boolean {
+  //   const token = localStorage.getItem('token');
+  //   // Check whether the token is expired and return
+  //   // true or false
+  //   return !this.jwtHelper.isTokenExpired(token);
+  // }
 }

@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import {
   Observable,
+  of,
   Subscription,
   map,
   catchError,
   TimeoutError,
-  of,
 } from 'rxjs';
 import { GlobalServService } from 'src/app/shared/services/global-serv.service';
 import { HttpServService } from 'src/app/shared/services/http-serv.service';
-import { AddEditBursaryComponent } from '../add-edit-bursary/add-edit-bursary.component';
+import { AddEditBursaryComponent } from '../../bursary/add-edit-bursary/add-edit-bursary.component';
 
 @Component({
-  selector: 'app-list-bursaries',
-  templateUrl: './list-bursaries.component.html',
-  styleUrls: ['./list-bursaries.component.scss'],
+  selector: 'app-list-students',
+  templateUrl: './list-students.component.html',
+  styleUrls: ['./list-students.component.scss'],
 })
-export class ListBursariesComponent {
+export class ListStudentsComponent {
   loading: boolean = true;
 
   rows: any = [];
@@ -28,21 +28,22 @@ export class ListBursariesComponent {
   defaultNavActiveId = 1;
 
   columns = [
-    { name: 'Bursary Name', prop: 'bursary_name' },
+    { name: 'Full Name', prop: 'name' },
     // { name: 'Bursary Description', prop: 'bursary_description' },
-    { name: 'Bursary Amount', prop: 'bursary_amount' },
-    { name: 'Criteria', prop: 'criteria' },
-    { name: 'Appl Date', prop: 'application_start_date' },
-    // { name: 'Application End Date', prop: 'application_end_date' },
-    { name: 'Review Date', prop: 'review_start_date' },
-    // { name: 'Review End Date', prop: 'review_end_date' },
+    { name: 'Gender', prop: 'gender' },
+    { name: 'DOB', prop: 'dob' },
+    { name: 'Age', prop: 'age' },
+    { name: 'Form/Year', prop: 'formYear' },
+    { name: 'Mobile No', prop: 'phone' },
+    { name: 'Course', prop: 'course' },
+    { name: 'Village', prop: 'village' },
     // { name: 'Notification Date', prop: 'notification_date' },
-    { name: 'Disburs Date', prop: 'disbursement_date' },
-    { name: 'Status', prop: 'status' },
+    // { name: 'Status', prop: 'status' },
+    { name: 'Actions', prop: '_id' },
   ];
 
   allColumns = [...this.columns];
-  bursariesList$: Observable<any> = of([]);
+  studentsList$: Observable<any> = of([]);
 
   bsModalRef?: BsModalRef;
 
@@ -75,93 +76,20 @@ export class ListBursariesComponent {
       size: size,
     };
 
-    this.bursariesList$ = this.httpService.getReq('bursary/bursaries').pipe(
+    this.studentsList$ = this.httpService.getReq('bursary/students/ward').pipe(
       map((resp: any) => {
         console.log(resp);
         console.log(resp);
-
-        // this.rows = [
-        //   {
-        //     bursary_name: 'Scholarship 1',
-        //     bursary_description: 'This is the description for Scholarship 1.',
-        //     bursary_amount: 1000,
-        //     criteria: 'GPA of 3.5 or higher',
-        //     application_start_date: '2023-01-15',
-        //     application_end_date: '2023-02-15',
-        //     review_start_date: '2023-02-20',
-        //     review_end_date: '2023-03-05',
-        //     notification_date: '2023-03-10',
-        //     disbursement_date: '2023-04-01',
-        //     status: 'Open',
-        //   },
-        //   {
-        //     bursary_name: 'Grant 1',
-        //     bursary_description: 'This is the description for Grant 1.',
-        //     bursary_amount: 500,
-        //     criteria: 'Financial need-based',
-        //     application_start_date: '2023-02-01',
-        //     application_end_date: '2023-03-01',
-        //     review_start_date: '2023-03-10',
-        //     review_end_date: '2023-03-20',
-        //     notification_date: '2023-03-25',
-        //     disbursement_date: '2023-04-15',
-        //     status: 'Closed',
-        //   },
-        //   {
-        //     bursary_name: 'Fellowship 1',
-        //     bursary_description: 'This is the description for Fellowship 1.',
-        //     bursary_amount: 1500,
-        //     criteria: 'Research excellence',
-        //     application_start_date: '2023-03-15',
-        //     application_end_date: '2023-04-15',
-        //     review_start_date: '2023-04-20',
-        //     review_end_date: '2023-05-05',
-        //     notification_date: '2023-05-10',
-        //     disbursement_date: '2023-06-01',
-        //     status: 'Open',
-        //   },
-        //   {
-        //     bursary_name: 'Scholarship 2',
-        //     bursary_description: 'This is the description for Scholarship 2.',
-        //     bursary_amount: 1200,
-        //     criteria: 'Community involvement',
-        //     application_start_date: '2023-01-10',
-        //     application_end_date: '2023-02-10',
-        //     review_start_date: '2023-02-15',
-        //     review_end_date: '2023-02-28',
-        //     notification_date: '2023-03-05',
-        //     disbursement_date: '2023-03-30',
-        //     status: 'Closed',
-        //   },
-        //   {
-        //     bursary_name: 'Grant 2',
-        //     bursary_description: 'This is the description for Grant 2.',
-        //     bursary_amount: 750,
-        //     criteria: 'STEM majors only',
-        //     application_start_date: '2023-02-05',
-        //     application_end_date: '2023-03-05',
-        //     review_start_date: '2023-03-15',
-        //     review_end_date: '2023-03-30',
-        //     notification_date: '2023-04-05',
-        //     disbursement_date: '2023-04-25',
-        //     status: 'Open',
-        //   },
-        // ];
-        // return this.rows
 
         if (resp.length >= 1) {
           let response = resp;
 
           this.rows = response.map((item: any, index: any) => {
-            item['application_start_date'] = this.globalService.formatDate(
-              item['application_start_date']
-            );
-            item['review_start_date'] = this.globalService.formatDate(
-              item['review_start_date']
-            );
-            item['disbursement_date'] = this.globalService.formatDate(
-              item['disbursement_date']
-            );
+            item['dob'] = this.globalService.formatDate(item['dob']);
+
+            // item['completion_date'] = this.globalService.formatDate(
+            //   item['completion_date']
+            // );
             const res = {
               ...item,
               frontendId: index + 1,
@@ -204,8 +132,10 @@ export class ListBursariesComponent {
     let eventData = JSON.parse(data);
 
     if (eventData.action == 'View') {
-      // this.viewedAssessor = eventData["row"]["id"];
-      // this.router.navigate([`/assessors/view-assessor/${this.viewedAssessor}`]);
+      console.log(eventData['row']);
+
+      let viewedStudent = eventData['row']['_id'];
+      this.router.navigate([`bursary/student/${viewedStudent}`]);
     } else if (eventData.action == 'Edit') {
       this.editAssessor(eventData.row);
     }
@@ -215,7 +145,7 @@ export class ListBursariesComponent {
     this.filteredRows = data;
   }
 
-  addBursary() {
+  addStudent() {
     const initialState: ModalOptions = {
       initialState: {
         title: 'Add Bursary',
@@ -229,7 +159,7 @@ export class ListBursariesComponent {
     this.bsModalRef.content.closeBtnName = 'Close';
     this.bsModalRef.content.isEdit = false;
 
-    this.bsModalRef.onHide?.emit((val: any) => {
+    this.bsModalRef.onHidden?.emit((val: any) => {
       console.log(val);
       this.getIndividualData();
     });
