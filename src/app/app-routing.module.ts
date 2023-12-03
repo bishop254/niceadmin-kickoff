@@ -38,7 +38,7 @@ const routes: Routes = [
     component: MinComponent,
     children: [
       {
-        path: 'login',
+        path: 'lgn',
         component: LoginComponent,
       },
       {
