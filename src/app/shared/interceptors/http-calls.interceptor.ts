@@ -3,13 +3,13 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpHeaders,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class HttpCallsInterceptor implements HttpInterceptor {
-
   constructor() {}
 
   intercept(
@@ -17,15 +17,16 @@ export class HttpCallsInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     if (!request.url.includes('/login')) {
-      // const headers = new HttpHeaders({
-      //   'Content-Type': 'application/json',
-      // });
-      // request.clone({ headers });
+      const headers = new HttpHeaders({
+        'ngrok-skip-browser-warning': 'true',
+        'Access-Control-Allow-Origin': '*',
+      });
+      request.clone({ headers });
 
       request = request.clone({
         withCredentials: true,
       });
-    } 
+    }
     return next.handle(request);
   }
 }
