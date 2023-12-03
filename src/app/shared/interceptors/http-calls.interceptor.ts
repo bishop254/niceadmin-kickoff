@@ -22,8 +22,8 @@ export class HttpCallsInterceptor implements HttpInterceptor {
         'ngrok-skip-browser-warning': 'true',
       });
       request = request.clone({
-        withCredentials: true,
         headers: headers,
+        withCredentials: true,
       });
     }
     return next.handle(request);
