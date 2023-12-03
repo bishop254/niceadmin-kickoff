@@ -20,11 +20,11 @@ export class SidebarComponent implements OnInit {
         link: '/dashboard',
         icon: 'bi bi-grid',
       },
-      {
-        title: 'Profile',
-        link: '/user-profile',
-        icon: 'bi bi-person',
-      },
+      // {
+      //   title: 'Profile',
+      //   link: '/user-profile',
+      //   icon: 'bi bi-person',
+      // },
 
       {
         title: 'Ministry Management',

@@ -21,7 +21,7 @@ export class HttpServService {
 
   public loginReq(endpoint: string, model: any): Observable<any> {
     return this.http.post(this.globalService.authHost + endpoint, model, {
-      withCredentials: false,
+      withCredentials: true,
     });
   }
 
