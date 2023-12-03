@@ -7,7 +7,7 @@ import { HttpServService } from '../shared/services/http-serv.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  studCount: number = 0;
+  studCount: any;
   constructor(private httpServ: HttpServService) {}
 
   ngOnInit(): void {
@@ -17,7 +17,6 @@ export class DashboardComponent implements OnInit {
   loadDetails() {
     this.httpServ.getReq('bursary/dashboard').subscribe({
       next: (resp: any) => {
-        console.log(resp);
         this.studCount = resp;
       },
     });

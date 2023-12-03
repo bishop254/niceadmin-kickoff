@@ -91,7 +91,6 @@
       ></i>
     </button>
   </div>
-  <hr />
   <ngx-datatable
     #table
     [columnMode]="ColumnMode.force"
@@ -103,9 +102,25 @@
     [footerHeight]="50"
     [rows]="rows"
     [sorts]="[{ prop: 'id', dir: 'desc' }]"
-    class="bootstrap  table table-bordered"
+    class="material border p-2"
     [scrollbarH]="true"
+    [selected]="selected"
+    [selectionType]="SelectionType.checkbox"
+    [selectAllRowsOnPage]="false"
+    [displayCheck]="displayCheck"
+    (activate)="onActivate($event)"
+    (select)="onSelect($event)"
   >
+    <ngx-datatable-column
+      [width]="30"
+      [sortable]="false"
+      [canAutoResize]="false"
+      [draggable]="false"
+      [resizeable]="false"
+      [headerCheckboxable]="true"
+      [checkboxable]="true"
+    >
+    </ngx-datatable-column>
     <ng-container *ngFor="let column of plainColumns">
       <ngx-datatable-column
         name="{{ column.name }}"
@@ -240,15 +255,13 @@
         >
           <span
             class="{{
-              (row.status ) ===
-              true
+              row.status === true
                 ? 'badge bg-success mr-1'
                 : 'badge bg-danger mr-1'
             }}"
           >
             {{
-              (row.status ) ===
-              true
+              row.status === true
                 ? column.prop == "assigned" || column.prop == "approved"
                   ? "True"
                   : "Active"
@@ -287,7 +300,7 @@
       </ngx-datatable-column>
 
       <ngx-datatable-column
-        *ngIf="column.prop === 'deviceStatus'"
+        *ngIf="column.prop === 'wardStage'"
         [resizeable]="false"
         [name]="column.name"
         [prop]="column.prop"
@@ -302,12 +315,70 @@
         >
           <span
             class="{{
-              row.deviceStatus === true
+              row.wardStage === 'PENDING'
+                ? 'badge bg-primary mr-1'
+                : row.wardStage === 'APPROVED'
                 ? 'badge bg-success mr-1'
                 : 'badge bg-danger mr-1'
             }}"
           >
-            {{ row.deviceStatus == true ? "Active" : "Inactive" }}</span
+            {{ row.wardStage }}</span
+          >
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column
+        *ngIf="column.prop === 'countyStage'"
+        [resizeable]="false"
+        [name]="column.name"
+        [prop]="column.prop"
+        [draggable]="false"
+        [maxWidth]="100"
+        [minWidth]="100"
+      >
+        <ng-template
+          let-row="row"
+          let-value="value"
+          ngx-datatable-cell-template
+        >
+          <span
+            class="{{
+              row.countyStage === 'PENDING'
+                ? 'badge bg-primary mr-1'
+                : row.countyStage === 'APPROVED'
+                ? 'badge bg-success mr-1'
+                : 'badge bg-danger mr-1'
+            }}"
+          >
+            {{ row.countyStage }}</span
+          >
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column
+        *ngIf="column.prop === 'ministryStage'"
+        [resizeable]="false"
+        [name]="column.name"
+        [prop]="column.prop"
+        [draggable]="false"
+        [maxWidth]="100"
+        [minWidth]="100"
+      >
+        <ng-template
+          let-row="row"
+          let-value="value"
+          ngx-datatable-cell-template
+        >
+          <span
+            class="{{
+              row.ministryStage === 'PENDING'
+                ? 'badge bg-primary mr-1'
+                : row.ministryStage === 'APPROVED'
+                ? 'badge bg-success mr-1'
+                : 'badge bg-danger mr-1'
+            }}"
+          >
+            {{ row.ministryStage }}</span
           >
         </ng-template>
       </ngx-datatable-column>
@@ -370,62 +441,6 @@
             }}"
           >
             {{ row.resStatus }}</span
-          >
-        </ng-template>
-      </ngx-datatable-column>
-
-      <ngx-datatable-column
-        *ngIf="column.prop === 'applStatus'"
-        [resizeable]="false"
-        [name]="column.name"
-        [prop]="column.prop"
-        [draggable]="false"
-        [maxWidth]="115"
-        [minWidth]="100"
-      >
-        <ng-template
-          let-row="row"
-          let-value="value"
-          ngx-datatable-cell-template
-        >
-          <span
-            class="{{
-              row.applStatus == 'APPROVED'
-                ? 'badge bg-success mr-1'
-                : row.applStatus == 'REJECTED'
-                ? 'badge bg-danger mr-1'
-                : 'badge bg-primary mr-1'
-            }}"
-          >
-            {{ row.applStatus }}</span
-          >
-        </ng-template>
-      </ngx-datatable-column>
-
-      <ngx-datatable-column
-        *ngIf="column.prop === 'stanStatus'"
-        [resizeable]="false"
-        [name]="column.name"
-        [prop]="column.prop"
-        [draggable]="false"
-        [maxWidth]="115"
-        [minWidth]="100"
-      >
-        <ng-template
-          let-row="row"
-          let-value="value"
-          ngx-datatable-cell-template
-        >
-          <span
-            class="{{
-              row.stanStatus == 'PUBLISHED'
-                ? 'badge bg-success mr-1'
-                : row.stanStatus == 'PREVIEW'
-                ? 'badge bg-warn mr-1'
-                : 'badge bg-info mr-1'
-            }}"
-          >
-            {{ row.stanStatus }}</span
           >
         </ng-template>
       </ngx-datatable-column>
@@ -506,60 +521,6 @@
             }}"
           >
             {{ row.firstTimeLogin === true ? "Yes" : "No" }}</span
-          >
-        </ng-template>
-      </ngx-datatable-column>
-
-      <ngx-datatable-column
-        *ngIf="column.prop === 'systemRole'"
-        [draggable]="false"
-        [resizeable]="false"
-        name="Role Type"
-        [prop]="column.prop"
-        [maxWidth]="100"
-        [minWidth]="100"
-      >
-        <ng-template
-          let-row="row"
-          let-value="value"
-          ngx-datatable-cell-template
-        >
-          {{ row.d }}
-          <span
-            class="{{
-              row.systemRole === true
-                ? 'badge bg-primary mr-1'
-                : 'badge bg-success mr-1'
-            }}"
-          >
-            {{ row.systemRole === true ? "System Role" : "Custom Role" }}</span
-          >
-        </ng-template>
-      </ngx-datatable-column>
-
-      <ngx-datatable-column
-        *ngIf="column.prop === 'channel'"
-        [draggable]="false"
-        [resizeable]="false"
-        [name]="column.name"
-        [prop]="column.prop"
-        [maxWidth]="100"
-        [minWidth]="100"
-      >
-        <ng-template
-          let-row="row"
-          let-value="value"
-          ngx-datatable-cell-template
-        >
-          {{ row.d }}
-          <span
-            class="{{
-              row.channel === 'ORIGINATED'
-                ? 'badge bg-primary mr-1'
-                : 'badge bg-success mr-1'
-            }}"
-          >
-            {{ row.channel === "ORIGINATED" ? "PORTAL" : "CUSTOMER" }}</span
           >
         </ng-template>
       </ngx-datatable-column>

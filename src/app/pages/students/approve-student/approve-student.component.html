@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h5 class="modal-title pull-left">{{ title }}</h5>
+  <button
+    type="button"
+    class="btn-close close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="m-2" [formGroup]="wardApprovalForm">
+    <div class="form-group">
+      <label for="amount">Approval Amount</label>
+      <input
+        type="number"
+        class="form-control"
+        id="amount"
+        placeholder="Enter approval amount"
+        formControlName="amount"
+      />
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select formControlName="status" class="form-control">
+        <option value="APPROVED" selected="selected">APPROVED</option>
+        <option value="REJECTED">REJECTED</option>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-success"
+    [disabled]="apprStat ? !wardApprovalForm.valid : false"
+    (click)="submit()"
+  >
+    Submit
+  </button>
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">
+    {{ closeBtnName }}
+  </button>
+</div>

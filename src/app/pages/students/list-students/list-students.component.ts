@@ -13,6 +13,7 @@ import {
 import { GlobalServService } from 'src/app/shared/services/global-serv.service';
 import { HttpServService } from 'src/app/shared/services/http-serv.service';
 import { AddEditBursaryComponent } from '../../bursary/add-edit-bursary/add-edit-bursary.component';
+import { BulkApprovalComponent } from '../bulk-approval/bulk-approval.component';
 
 @Component({
   selector: 'app-list-students',
@@ -31,24 +32,25 @@ export class ListStudentsComponent {
     { name: 'Full Name', prop: 'name' },
     // { name: 'Bursary Description', prop: 'bursary_description' },
     { name: 'Gender', prop: 'gender' },
-    { name: 'DOB', prop: 'dob' },
-    { name: 'Age', prop: 'age' },
-    { name: 'Form/Year', prop: 'formYear' },
     { name: 'Mobile No', prop: 'phone' },
     { name: 'Course', prop: 'course' },
+    { name: 'Age', prop: 'age' },
+    { name: 'Form/Year', prop: 'formYear' },
     { name: 'Village', prop: 'village' },
+    { name: 'DOB', prop: 'dob' },
     // { name: 'Notification Date', prop: 'notification_date' },
-    // { name: 'Status', prop: 'status' },
+    { name: 'Ward Stage', prop: 'wardStage' },
     { name: 'Actions', prop: '_id' },
   ];
 
   allColumns = [...this.columns];
   studentsList$: Observable<any> = of([]);
+  studentsToApprove: any[] = [];
 
   bsModalRef?: BsModalRef;
 
   title: string = 'Assessor';
-  actions = ['View', 'Edit'];
+  actions = ['View'];
   totalRecords: number = 0;
 
   subs: Subscription[] = [];
@@ -81,8 +83,8 @@ export class ListStudentsComponent {
         console.log(resp);
         console.log(resp);
 
-        if (resp.length >= 1) {
-          let response = resp;
+        if (resp['statusCode'] === 200) {
+          let response = resp['data'];
 
           this.rows = response.map((item: any, index: any) => {
             item['dob'] = this.globalService.formatDate(item['dob']);
@@ -136,133 +138,44 @@ export class ListStudentsComponent {
 
       let viewedStudent = eventData['row']['_id'];
       this.router.navigate([`bursary/student/${viewedStudent}`]);
-    } else if (eventData.action == 'Edit') {
-      this.editAssessor(eventData.row);
     }
+  }
+
+  selectedRowsEvent(data: any[]) {
+    this.studentsToApprove = data;
+    this.studentsToApprove = [...this.studentsToApprove].filter(
+      (stud) => stud['wardStage'] === 'APPROVED'
+    );
   }
 
   updateFilteredRowsEvent(data: string) {
     this.filteredRows = data;
   }
 
-  addStudent() {
-    const initialState: ModalOptions = {
-      initialState: {
-        title: 'Add Bursary',
-      },
-      class: 'modal-lg',
-    };
-    this.bsModalRef = this.modalService.show(
-      AddEditBursaryComponent,
-      initialState
-    );
-    this.bsModalRef.content.closeBtnName = 'Close';
-    this.bsModalRef.content.isEdit = false;
+  bulkApproval() {
+    if (this.studentsToApprove.length > 0) {
+      const initialState: ModalOptions = {
+        initialState: {
+          title: 'Approve Students',
+        },
+        class: 'modal-md',
+      };
+      this.bsModalRef = this.modalService.show(
+        BulkApprovalComponent,
+        initialState
+      );
+      this.bsModalRef.content.closeBtnName = 'Close';
+      this.bsModalRef.content.isEdit = false;
+      this.bsModalRef.content.studList = this.studentsToApprove;
 
-    this.bsModalRef.onHidden?.emit((val: any) => {
-      console.log(val);
-      this.getIndividualData();
-    });
-  }
-
-  addAssessor() {
-    // this.modalRef = this.modalService.open(AddEditAssessorComponent, {
-    //   centered: true,
-    //   animation: true,
-    // });
-    // this.modalRef.componentInstance.title = "Add Assessor";
-    // let modalSub = this.modalRef.componentInstance.passEntry.subscribe(
-    //   (receivedEntry: any) => {
-    //     let model = {
-    //       firstName: receivedEntry["firstName"],
-    //       middleName: receivedEntry["middleName"],
-    //       lastName: receivedEntry["lastName"],
-    //       emailAddress: receivedEntry["emailAddress"],
-    //       nationalId: receivedEntry["nationalId"],
-    //       mobileNumber: receivedEntry["mobileNumber"],
-    //     };
-    //     this.loading = true;
-    //     this.modalRef.close();
-    //     let saveAssessor = this.httpService
-    //       // .postReq('/api/v1/admin/employee/create', model)
-    //       .postReq("/api/v1/admin/auditor/create-auditor", model)
-    //       .subscribe({
-    //         next: (resp) => {
-    //           this.rows = [];
-    //           if (resp["status"] === 200) {
-    //             this.toastr.success(resp["message"], "Assessor Staged");
-    //           } else {
-    //             this.toastr.error(resp["message"], "Assessor Not Staged");
-    //           }
-    //           this.router.navigate(["/assessors/staged-assessors"]);
-    //         },
-    //         error: (error) => {
-    //           // Handle the error here
-    //           this.loading = false;
-    //           this.toastr.error(
-    //             error["statusText"] ||
-    //               error["message"] ||
-    //               error.error["message"],
-    //             "Assessor Not Staged"
-    //           );
-    //           this.getIndividualData(0);
-    //         },
-    //       });
-    //     this.subs.push(saveAssessor);
-    //   }
-    // );
-    // this.subs.push(modalSub);
-  }
-
-  editAssessor(assessorData: any) {
-    // this.modalRef = this.modalService.open(AddEditAssessorComponent, {
-    //   centered: true,
-    //   animation: true,
-    // });
-    // this.modalRef.componentInstance.formData = assessorData;
-    // this.modalRef.componentInstance.title = "Edit User";
-    // let modalSub = this.modalRef.componentInstance.passEntry.subscribe(
-    //   (receivedEntry: any) => {
-    //     let model = {
-    //       firstName: receivedEntry["firstName"],
-    //       lastName: receivedEntry["lastName"],
-    //       middleName:
-    //         receivedEntry["middleName"] == null
-    //           ? ""
-    //           : receivedEntry["middleName"],
-    //       emailAddress: receivedEntry["emailAddress"],
-    //       nationalId: receivedEntry["nationalId"],
-    //       mobileNumber: receivedEntry["mobileNumber"],
-    //       id: parseInt(assessorData["id"]),
-    //     };
-    //     this.loading = true;
-    //     this.modalRef.close();
-    //     let updateAdmin = this.httpService
-    //       .postReq("/api/v1/admin/employee/edit", model)
-    //       .subscribe({
-    //         next: (resp) => {
-    //           this.rows = [];
-    //           if (resp["status"] === 200) {
-    //             this.toastr.success(resp["message"], "Assessor Updated");
-    //           } else {
-    //             this.toastr.error(resp["message"], "Assessor Not Updated");
-    //           }
-    //           this.getIndividualData(0);
-    //         },
-    //         error: (error) => {
-    //           // Handle the error here
-    //           this.loading = false;
-    //           this.toastr.error(
-    //             error["statusText"] ||
-    //               error["message"] ||
-    //               error.error["message"],
-    //             "Assessor Not Updated"
-    //           );
-    //         },
-    //       });
-    //     this.subs.push(updateAdmin);
-    //   }
-    // );
-    // this.subs.push(modalSub);
+      this.bsModalRef.onHidden?.emit((val: any) => {
+        console.log(val);
+        this.getIndividualData();
+      });
+    } else {
+      this.toastr.info(
+        'Select multiple students that match the document to upload'
+      );
+    }
   }
 }

@@ -41,24 +41,16 @@ export class LoginComponent implements OnInit {
       map((resp: any) => {
         console.log(resp);
 
-        if (resp['status'] === 200) {
-          // localStorage.setItem('access_token', resp['data']['access_token']);
-          // localStorage.setItem('refresh_token', resp['data']['refresh_token']);
+        if (resp['statusCode'] === 201) {
           localStorage.setItem('email', email);
-          // localStorage.setItem('profile', resp['data']['profile']);
-          // localStorage.setItem('roles', JSON.stringify(resp['data']['roles']));
+          localStorage.setItem('profile', resp['data']['profile']);
+          localStorage.setItem('ward', resp['data']['ward'] || '');
 
-          // if (resp['data']['firstTimeLogin'] == true) {
-          //   this.router.navigate(['/auth/change-password']);
-          // } else {
-            this.toastr.success('Login Success');
-              this.router.navigate(['/dashboard']);
-          // this.getRoles(resp['data']['profile'], resp['data']['roles']);
-          // }
+          this.toastr.success('Login Success');
+          this.router.navigate(['/dashboard']);
 
           return resp;
         } else {
-          // this.toastr.error(resp['message'], 'Login Failure');
           throwError(() => resp['message']);
         }
         this.isLoading = false;

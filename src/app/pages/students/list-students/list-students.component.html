@@ -8,9 +8,9 @@
       </ol>
     </nav>
 
-    <!-- <button class="btn bg-primary" (click)="addStudent()">
-      <p class="text-white">Add Student</p>
-    </button> -->
+    <button class="btn bg-primary" (click)="bulkApproval()">
+      <p class="text-white">Approve Students</p>
+    </button>
   </div>
 </div>
 
@@ -36,6 +36,7 @@
           [loadingIndicator]="false"
           [totalItems]="totalRecords"
           (outputEvent)="triggerEvent($event)"
+          (selectedRowsEvent)="selectedRowsEvent($event)"
           (updateFilteredRows)="updateFilteredRowsEvent($event)"
         >
         </app-custom-tbl>

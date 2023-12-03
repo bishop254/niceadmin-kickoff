@@ -31,8 +31,8 @@ export class GlobalServService {
   }
 
   public getUserProfile(): string | null {
-    return localStorage.getItem('userType')
-      ? localStorage.getItem('userType')
+    return localStorage.getItem('profile')
+      ? localStorage.getItem('profile')
       : '';
   }
 

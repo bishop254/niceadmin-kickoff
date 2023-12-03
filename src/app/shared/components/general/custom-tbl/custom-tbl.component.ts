@@ -1,13 +1,23 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  ColumnMode,
+  DatatableComponent,
+  SelectionType,
+} from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-custom-tbl',
   templateUrl: './custom-tbl.component.html',
-  styleUrls: ['./custom-tbl.component.scss']
+  styleUrls: ['./custom-tbl.component.scss'],
 })
 export class CustomTblComponent {
-  @ViewChild("table") table!: DatatableComponent;
+  @ViewChild('table') table!: DatatableComponent;
   ColumnMode = ColumnMode;
 
   @Input() loadingIndicator = true;
@@ -26,6 +36,8 @@ export class CustomTblComponent {
   @Input() totalItems: number = 0;
 
   @Output() outputEvent = new EventEmitter<string>();
+
+  @Output() selectedRowsEvent = new EventEmitter<any>();
 
   @Output() updateFilteredRows = new EventEmitter<string>();
 
@@ -46,71 +58,72 @@ export class CustomTblComponent {
   maxSize: number = 5;
   selectedRange: any = {};
 
-  // hoveredDate: NgbDate | null = null;
+  selected: any = [];
+  SelectionType = SelectionType;
 
-  // fromDate: NgbDate;
-  // toDate: NgbDate | null = null;
-
-  constructor() {
-    // this.fromDate = calendar.getToday();
-    // this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
-  }
+  constructor() {}
 
   ngOnInit() {
     this.filterColumns = [...this.columns].filter(
       (col: any) =>
-        col["name"] !== "Actions" &&
-        col["name"] !== "Status" &&
-        col["name"] !== "Blocked" &&
-        col["prop"] !== "createdAt" &&
-        col["prop"] !== "createdOn" &&
-        col["prop"] !== "updatedAt" &&
-        col["prop"] !== "systemRole" &&
-        col["prop"] !== "firstTimeLogin" &&
-        col["prop"] !== "approved" &&
-        col["prop"] !== "assigned" &&
-        col["prop"] !== "taskStatus" &&
-        col["prop"] !== "deviceStatus" &&
-        col["prop"] !== "reqStatus" &&
-        col["prop"] !== "resStatus" &&
-        col["prop"] !== "applStatus" &&
-        col["prop"] !== "stanStatus" &&
-        col["prop"] !== "taskDate" &&
-        col["prop"] !== "enterprise" &&
-        col["prop"] !== "enterpriseClass" &&
-        col["prop"] !== "channel"
+        col['name'] !== 'Actions' &&
+        col['name'] !== 'Status' &&
+        col['name'] !== 'Blocked' &&
+        col['prop'] !== 'createdAt' &&
+        col['prop'] !== 'createdOn' &&
+        col['prop'] !== 'updatedAt' &&
+        col['prop'] !== 'systemRole' &&
+        col['prop'] !== 'firstTimeLogin' &&
+        col['prop'] !== 'approved' &&
+        col['prop'] !== 'assigned' &&
+        col['prop'] !== 'taskStatus' &&
+        col['prop'] !== 'deviceStatus' &&
+        col['prop'] !== 'reqStatus' &&
+        col['prop'] !== 'resStatus' &&
+        col['prop'] !== 'applStatus' &&
+        col['prop'] !== 'stanStatus' &&
+        col['prop'] !== 'taskDate' &&
+        col['prop'] !== 'enterprise' &&
+        col['prop'] !== 'enterpriseClass' &&
+        col['prop'] !== 'wardStage' &&
+        col['prop'] !== 'countyStage' &&
+        col['prop'] !== 'ministryStage' &&
+        col['prop'] !== 'channel'
     );
 
     this.toggleFilters = [...this.columns].filter(
       (col: any) =>
-        col["name"] == "Active" ||
-        col["name"] == "Status" ||
-        col["name"] == "Blocked" ||
-        col["prop"] == "systemRole" ||
-        col["prop"] == "firstTimeLogin" ||
-        col["prop"] == "approved" ||
-        col["prop"] == "assigned" ||
-        col["prop"] == "taskStatus" ||
-        col["prop"] == "deviceStatus" ||
-        col["prop"] == "reqStatus" ||
-        col["prop"] == "resStatus" ||
-        col["prop"] == "applStatus" ||
-        col["prop"] == "stanStatus" ||
-        col["prop"] == "enterprise" ||
-        col["prop"] == "enterpriseClass" ||
-        col["prop"] == "channel"
+        col['name'] == 'Active' ||
+        col['name'] == 'Status' ||
+        col['name'] == 'Blocked' ||
+        col['prop'] == 'systemRole' ||
+        col['prop'] == 'firstTimeLogin' ||
+        col['prop'] == 'approved' ||
+        col['prop'] == 'assigned' ||
+        col['prop'] == 'taskStatus' ||
+        col['prop'] == 'deviceStatus' ||
+        col['prop'] == 'reqStatus' ||
+        col['prop'] == 'resStatus' ||
+        col['prop'] == 'applStatus' ||
+        col['prop'] == 'stanStatus' ||
+        col['prop'] == 'enterprise' ||
+        col['prop'] == 'enterpriseClass' ||
+        col['prop'] == 'wardStage' ||
+        col['prop'] == 'countyStage' ||
+        col['prop'] == 'ministryStage' ||
+        col['prop'] == 'channel'
     );
     this.configureSelectParams();
 
     this.dateFilters = [...this.columns].filter((col: any) => {
       if (
-        col["prop"] == "updatedOn" ||
-        col["prop"] == "createdOn" ||
-        col["prop"] == "createdAt" ||
-        col["prop"] == "updatedAt" ||
-        col["prop"] == "taskDate"
+        col['prop'] == 'updatedOn' ||
+        col['prop'] == 'createdOn' ||
+        col['prop'] == 'createdAt' ||
+        col['prop'] == 'updatedAt' ||
+        col['prop'] == 'taskDate'
       ) {
-        this.selectedRange[col["prop"]] = [];
+        this.selectedRange[col['prop']] = [];
 
         return col;
       }
@@ -118,7 +131,7 @@ export class CustomTblComponent {
 
     this.data = [...this.rows];
 
-    console.log(this.data, "oninit");
+    console.log(this.data, 'oninit');
 
     this.changePageSize(true);
     this.configureColumnParams();
@@ -126,209 +139,64 @@ export class CustomTblComponent {
 
   configureSelectParams() {
     this.toggleFilters.forEach((item) => {
-      if (item["prop"] == "systemRole") {
-        item["options"] = [
+      if (
+        item['prop'] == 'wardStage' ||
+        item['prop'] == 'countyStage' ||
+        item['prop'] == 'ministryStage'
+      ) {
+        item['options'] = [
           {
-            val: "true",
-            label: "System Role",
+            val: 'PENDING',
+            label: 'Pending',
           },
           {
-            val: "false",
-            label: "Custom Role",
-          },
-        ];
-      }
-
-      if (item["prop"] == "deviceStatus") {
-        item["options"] = [
-          {
-            val: true,
-            label: "Active",
+            val: 'APPROVED',
+            label: 'Approved',
           },
           {
-            val: false,
-            label: "Inactive",
+            val: 'REJECTED',
+            label: 'Rejected',
           },
         ];
       }
 
-      if (item["prop"] == "resStatus") {
-        item["options"] = [
+      if (item['prop'] == 'status') {
+        item['options'] = [
           {
-            val: "PENDING_UPLOAD",
-            label: "Pending Upload",
+            val: 'true',
+            label: 'Active',
           },
           {
-            val: "PENDING_PUBLISH",
-            label: "Pending Publish",
-          },
-          {
-            val: "PUBLISHED",
-            label: "Published",
-          },
-          {
-            val: "APPEALED",
-            label: "Appealed",
-          },
-        ];
-      }
-
-      if (item["prop"] == "applStatus") {
-        item["options"] = [
-          {
-            val: "PENDING",
-            label: "Pending",
-          },
-          {
-            val: "APPROVED",
-            label: "Approved",
-          },
-          {
-            val: "REJECTED",
-            label: "Rejected",
-          },
-        ];
-      }
-
-      if (item["prop"] == "stanStatus") {
-        item["options"] = [
-          {
-            val: "PUBLISHED",
-            label: "Published",
-          },
-          {
-            val: "PREVIEW",
-            label: "Preview",
-          },
-          {
-            val: "DRAFT",
-            label: "Draft",
-          },
-        ];
-      }
-
-      if (item["prop"] == "taskStatus") {
-        item["options"] = [
-          {
-            val: "ASSIGNED",
-            label: "Assigned",
-          },
-          {
-            val: "UNASSIGNED",
-            label: "Unassigned",
-          },
-          {
-            val: "ONGOING",
-            label: "Ongoing",
-          },
-          {
-            val: "COMPLETED",
-            label: "Completed",
-          },
-        ];
-      }
-
-      if (item["prop"] == "status") {
-        item["options"] = [
-          {
-            val: "true",
-            label: "Active",
-          },
-          {
-            val: "false",
-            label: "Inactive",
-          },
-        ];
-      }
-
-      if (item["prop"] == "reqStatus") {
-        item["options"] = [
-          {
-            val: "PENDING",
-            label: "Pending",
-          },
-          {
-            val: "APPROVED",
-            label: "Approved",
-          },
-          {
-            val: "REJECTED",
-            label: "Rejected",
-          },
-        ];
-      }
-
-      if (item["prop"] == "enterprise" || item["prop"] == "enterpriseClass") {
-        item["options"] = [
-          {
-            val: "Class A",
-            label: "Class A",
-          },
-          {
-            val: "Class B",
-            label: "Class B",
-          },
-          {
-            val: "Class C",
-            label: "Class C",
-          },
-          {
-            val: "Class D",
-            label: "Class D",
-          },
-          {
-            val: "Class E",
-            label: "Class E",
-          },
-          {
-            val: "Class F",
-            label: "Class F",
-          },
-          {
-            val: "Class G",
-            label: "Class G",
-          },
-          {
-            val: "Class H",
-            label: "Class H",
-          },
-        ];
-      }
-
-      if (item["prop"] == "channel") {
-        item["options"] = [
-          {
-            val: "ORIGINATED",
-            label: "Portal",
-          },
-          {
-            val: "INCOMING",
-            label: "Customer",
+            val: 'false',
+            label: 'Inactive',
           },
         ];
       }
 
       if (
-        item["prop"] !== "systemRole" &&
-        item["prop"] !== "active" &&
-        item["prop"] !== "deviceStatus" &&
-        item["prop"] !== "taskStatus" &&
-        item["prop"] !== "reqStatus" &&
-        item["prop"] !== "resStatus" &&
-        item["prop"] !== "applStatus" &&
-        item["prop"] !== "stanStatus" &&
-        item["prop"] !== "enterprise" &&
-        item["prop"] !== "enterpriseClass" &&
-        item["prop"] !== "channel"
+        item['prop'] !== 'systemRole' &&
+        item['prop'] !== 'active' &&
+        item['prop'] !== 'deviceStatus' &&
+        item['prop'] !== 'taskStatus' &&
+        item['prop'] !== 'reqStatus' &&
+        item['prop'] !== 'resStatus' &&
+        item['prop'] !== 'applStatus' &&
+        item['prop'] !== 'stanStatus' &&
+        item['prop'] !== 'enterprise' &&
+        item['prop'] !== 'enterpriseClass' &&
+        item['prop'] !== 'wardStage' &&
+        item['prop'] !== 'countyStage' &&
+        item['prop'] !== 'ministryStage' &&
+        item['prop'] !== 'channel'
       ) {
-        item["options"] = [
+        item['options'] = [
           {
-            val: "true",
-            label: "True",
+            val: 'true',
+            label: 'True',
           },
           {
-            val: "false",
-            label: "False",
+            val: 'false',
+            label: 'False',
           },
         ];
       }
@@ -361,27 +229,30 @@ export class CustomTblComponent {
         col.prop !== 'reqStatus' &&
         col.prop !== 'applStatus' &&
         col.prop !== 'stanStatus' &&
+        col.prop !== 'wardStage' &&
+        col.prop !== 'countyStage' &&
+        col.prop !== 'ministryStage' &&
         col.prop !== 'channel'
       ) {
         col['maxW'] =
-          col.name == 'National ID'
-            ? 200
-            : col.name == 'Views' || col.name == 'Downloads'
-            ? 100
-            : 800;
+          col.name == 'DOB'
+            ? 500
+            : col.name == 'Age' || col.name == 'Form/Year'
+            ? 30
+            : 700;
         col['minW'] = col.name == 'Email' ? 240 : 90;
 
         this.plainColumns.push(col);
         tempCol.splice(idx, 1, {});
       }
 
-      this.modColumns = [...tempCol].filter((item) => item !== "{}");
+      this.modColumns = [...tempCol].filter((item) => item !== '{}');
     });
   }
 
   changePageSize(initial: boolean = false, event?: Event) {
     if (initial) {
-      this.pageSize = parseInt("5");
+      this.pageSize = parseInt('5');
     } else {
       this.pageSize = parseInt((event?.target as HTMLSelectElement).value);
     }
@@ -405,37 +276,37 @@ export class CustomTblComponent {
 
     let tempRows = [...this.data];
 
-    const filterInputs = document.querySelectorAll(".filterInputs");
+    const filterInputs = document.querySelectorAll('.filterInputs');
     filterInputs.forEach((input: any) => {
       if (
-        input.id == "Created On" ||
-        input.id == "createdOn" ||
-        input.id == "CreatedAt" ||
-        input.id == "createdAt" ||
-        input.id == "updatedOn" ||
-        input.id == "updatedAt" ||
-        input.id == "taskDate"
+        input.id == 'Created On' ||
+        input.id == 'createdOn' ||
+        input.id == 'CreatedAt' ||
+        input.id == 'createdAt' ||
+        input.id == 'updatedOn' ||
+        input.id == 'updatedAt' ||
+        input.id == 'taskDate'
       ) {
         if (this.selectedRange[input.id].length > 0) {
           let startDate = this.selectedRange[input.id][0].toISOString();
           let endDate = this.selectedRange[input.id][1].toISOString();
 
           const temp = tempRows.filter(function (d: any) {
-            if(!!d[input.id]){
+            if (!!d[input.id]) {
               console.log(d);
               console.log(d[input.id]);
-              
+
               let date: any = new Date(d[input.id]).toISOString();
-  
+
               // date = date.replace(' ', 'T');
               return date >= startDate && date <= endDate;
-            } 
-            return null
+            }
+            return null;
           });
           tempRows = [...temp];
         }
       } else {
-        if (input.value !== "") {
+        if (input.value !== '') {
           const temp = tempRows.filter(function (d: any) {
             let key = input.id;
 
@@ -460,16 +331,16 @@ export class CustomTblComponent {
       }
     });
 
-    const filterSelects = document.querySelectorAll(".filterSelect");
+    const filterSelects = document.querySelectorAll('.filterSelect');
     filterSelects.forEach((select: any) => {
       let val = select.value;
-      if (val !== "") {
-        if (val == true || val == false || val == "true" || val == "false") {
+      if (val !== '') {
+        if (val == true || val == false || val == 'true' || val == 'false') {
           console.log(val);
 
-          if (val == "false") {
+          if (val == 'false') {
             val = false;
-          } else if (val == "true") {
+          } else if (val == 'true') {
             val = true;
           }
           console.log(tempRows);
@@ -523,12 +394,12 @@ export class CustomTblComponent {
         ? [...this.data]
         : [...this.rows];
 
-    const filterInputs = document.querySelectorAll(".filterInputs");
+    const filterInputs = document.querySelectorAll('.filterInputs');
     filterInputs.forEach((input: any) => {
-      input.value = "";
+      input.value = '';
     });
 
-    const filterSelect = document.querySelectorAll(".filterSelect");
+    const filterSelect = document.querySelectorAll('.filterSelect');
     filterSelect.forEach((select: any) => {
       select.selectedIndex = 0;
     });
@@ -543,27 +414,20 @@ export class CustomTblComponent {
     this.updateFilteredRows.emit(this.rows);
   }
 
-  // onDateSelection(date: NgbDate) {
-  //   if (!this.fromDate && !this.toDate) {
-  //     this.fromDate = date;
-  //   } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-  //     this.toDate = date;
-  //   } else {
-  //     this.toDate = null;
-  //     this.fromDate = date;
-  //   }
-  // }
+  onSelect(selected: any) {
+    console.log('Select Event', selected);
+    console.log('Select', this.selected);
 
-  // isHovered(date: NgbDate) {
-  //   return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
-  // }
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected['selected']);
+    this.selectedRowsEvent.emit(this.selected);
+  }
 
-  // isInside(date: NgbDate) {
-  //   return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  // }
+  onActivate(event: any) {
+    //console.log('Activate Event', event);
+  }
 
-  // isRange(date: NgbDate) {
-  //   return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
-  // }
-
+  displayCheck(row: { name: string }) {
+    return row.name !== 'Ethel Price';
+  }
 }

@@ -27,6 +27,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpCallsInterceptor } from './shared/interceptors/http-calls.interceptor';
+import { ApproveStudentComponent } from './pages/students/approve-student/approve-student.component';
+import { BulkApprovalComponent } from './pages/students/bulk-approval/bulk-approval.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { HttpCallsInterceptor } from './shared/interceptors/http-calls.intercept
     LoginComponent,
     ErrorComponent,
     UserProfileComponent,
+    ApproveStudentComponent,
+    BulkApprovalComponent,
   ],
   imports: [
     BrowserModule,

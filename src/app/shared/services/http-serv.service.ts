@@ -12,8 +12,7 @@ export class HttpServService {
   public userRoles$ = this.userRolesSource.asObservable();
   constructor(
     private http: HttpClient,
-    private globalService: GlobalServService,
-    // public jwtHelper: JwtHelperService
+    private globalService: GlobalServService // public jwtHelper: JwtHelperService
   ) {}
 
   public updateRoles(roles: any) {
@@ -30,8 +29,22 @@ export class HttpServService {
     return this.http.post(this.globalService.apiHost + endpoint, model);
   }
 
+  public postAuthReq(endpoint: string, model: any): Observable<any> {
+    return this.http.post(this.globalService.authHost + endpoint, model);
+  }
+
   public getReq(endpoint: string): Observable<any> {
     return this.http.get(this.globalService.apiHost + endpoint);
+  }
+
+  public getAuthReq(endpoint: string): Observable<any> {
+    return this.http.get(this.globalService.authHost + endpoint);
+  }
+
+  public getFileReq(endpoint: string): Observable<any> {
+    return this.http.get(this.globalService.apiHost + endpoint, {
+      responseType: 'blob',
+    });
   }
 
   public customerPostReq(endpoint: string, model: any): Observable<any> {

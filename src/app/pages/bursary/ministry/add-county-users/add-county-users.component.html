@@ -1,0 +1,69 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ title }}</h4>
+  <button
+    type="button"
+    class="btn-close close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="m-2" [formGroup]="bursaryForm">
+    <div class="form-group">
+      <label for="bursaryName">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="Enter email"
+        formControlName="email"
+      />
+    </div>
+    <div class="form-group">
+      <label for="idNo">ID Number</label>
+      <input
+        type="idNo"
+        class="form-control"
+        id="idNo"
+        placeholder="Enter ID Number"
+        formControlName="idNo"
+      />
+    </div>
+    <div class="row my-1">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            placeholder="Enter name"
+            formControlName="name"
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="mobile">Mobile No</label>
+          <input
+            type="text"
+            class="form-control"
+            id="mobile"
+            placeholder="Enter mobile"
+            formControlName="mobile"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="submit()">
+    Submit
+  </button>
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">
+    {{ closeBtnName }}
+  </button>
+</div>

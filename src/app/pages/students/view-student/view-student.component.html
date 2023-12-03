@@ -1,13 +1,15 @@
 <div class="pagetitle">
   <h1>Student Page</h1>
-  <nav>
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a routerLink="/bursary/students">All Students</a>
-      </li>
-      <li class="breadcrumb-item active">Student</li>
-    </ol>
-  </nav>
+  <div class="d-flex flex-row justify-content-between align-items-center">
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a routerLink="/bursary/students">All Students</a>
+        </li>
+        <li class="breadcrumb-item active">Student</li>
+      </ol>
+    </nav>
+  </div>
 </div>
 
 <section class="section" *ngIf="bursariesList$ | async">
@@ -32,7 +34,7 @@
           <p>
             <strong>Date of Birth : </strong> {{ studDetails["dob"] | date }}
           </p>
-          <p>
+          <!-- <p>
             <strong>Disabled : </strong>
             <span
               class="{{
@@ -43,10 +45,14 @@
             >
               {{ studDetails["disabled"] == true ? "Yes" : "No" }}
             </span>
-          </p>
+          </p> -->
+          <p><strong>Year of Study : </strong> {{ studDetails["formYear"] }}</p>
+          <p><strong>Course : </strong> {{ studDetails["course"] }}</p>
           <p>
-            <strong>Year of Study : </strong> {{ studDetails["year_of_study"] }}
+            <strong>Constituency : </strong> {{ studDetails["constituency"] }}
           </p>
+          <p><strong>Ward : </strong> {{ studDetails["ward"] }}</p>
+          <p><strong>Village : </strong> {{ studDetails["village"] }}</p>
         </div>
       </div>
     </div>
@@ -56,25 +62,23 @@
         <div class="card-body">
           <h5 class="card-title">School</h5>
           <p>
-            <strong>School/Institution :</strong> {{ studDetails["school"] }}
+            <strong>School/Institution :</strong> {{ studDetails["instName"] }}
           </p>
-          <p>
-            <strong>Bank Name :</strong> {{ studDetails["school_bank_name"] }}
-          </p>
+          <p><strong>Bank Name :</strong> {{ studDetails["instBank"] }}</p>
           <p>
             <strong>Bank Account No :</strong>
-            {{ studDetails["school_bank_account_no"] }}
+            {{ studDetails["instAccNo"] }}
           </p>
           <p>
             <strong>Bank Branch :</strong>
-            {{ studDetails["school_bank_branch"] }}
+            {{ studDetails["instBranch"] }}
           </p>
-          <p>
+          <!-- <p>
             <strong>Fee Balance(KES) : </strong>
             <span class="badge bg-primary mr-1">
               {{ studDetails["fee_balance"] }}
             </span>
-          </p>
+          </p> -->
         </div>
       </div>
     </div>
@@ -83,7 +87,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Parents/Guardians</h5>
-          <p>
+          <!-- <p>
             <strong>Parent Status : </strong>
             <span
               class="{{
@@ -101,33 +105,215 @@
           <p>
             <strong>Grand Parent Status :</strong>
             {{ studDetails["grand_parent_care_state"] }}
-          </p>
+          </p> -->
           <hr />
           <p>
             <strong>Father Guardian name :</strong>
-            {{ studDetails["father_guardian_name"] }}
+            {{ studDetails["fatherName"] }}
           </p>
           <p>
             <strong>Father Guardian occupation :</strong>
-            {{ studDetails["father_guardian_occupation"] }}
+            {{ studDetails["fatherOcc"] }}
           </p>
           <p>
             <strong>Father Guardian phone :</strong>
-            {{ studDetails["father_guardian_phone"] }}
+            {{ studDetails["fatherPhone"] }}
           </p>
           <hr />
           <p>
             <strong>Mother Guardian name :</strong>
-            {{ studDetails["mother_guardian_name"] }}
+            {{ studDetails["motherName"] }}
           </p>
           <p>
             <strong>Mother Guardian occupation :</strong>
-            {{ studDetails["mother_guardian_occupation"] }}
+            {{ studDetails["motherOcc"] }}
           </p>
           <p>
             <strong>Mother Guardian phone :</strong>
-            {{ studDetails["mother_guardian_phone"] }}
+            {{ studDetails["motherPhone"] }}
           </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Sponsor Details</h5>
+          <p>
+            <strong>Sponsor Name :</strong> {{ studDetails["sponsorName"] }}
+          </p>
+          <p>
+            <strong>Sponsor Occupation :</strong>
+            {{ studDetails["sponsorOccupation"] }}
+          </p>
+          <p>
+            <strong>Sponsor Phone :</strong>
+            {{ studDetails["sponsorPhone"] }}
+          </p>
+          <p>
+            <strong>Sponsor Relationship :</strong>
+            {{ studDetails["sponsorRelationship"] }}
+          </p>
+          <p>
+            <strong>Sponsor children(s) : </strong>
+            <span class="badge bg-primary mr-1">
+              {{ studDetails["sponsorChildrenNum"] }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body" *ngIf="filesList$ | async">
+          <h5 class="card-title">Document Details</h5>
+          <p>
+            <strong>Declaration Form :</strong>
+            <button
+              class="btn btn-primary btn-sm mx-3"
+              type="button"
+              (click)="viewDoc('declForm')"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+          </p>
+          <p>
+            <strong>Parent(s)/Guardian ID :</strong>
+            <button
+              class="btn btn-primary btn-sm mx-3"
+              type="button"
+              (click)="viewDoc('parentIds')"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+          </p>
+          <p>
+            <strong>Student ID :</strong>
+            <button
+              class="btn btn-primary btn-sm mx-3"
+              type="button"
+              (click)="viewDoc('studId')"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+          </p>
+          <p>
+            <strong>Birth Certificate :</strong>
+            <button
+              class="btn btn-primary btn-sm mx-3"
+              type="button"
+              (click)="viewDoc('studBirthCert')"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+          </p>
+          <p>
+            <strong>Parent(s) Death Certificate : </strong>
+            <button
+              class="btn btn-primary btn-sm mx-3"
+              type="button"
+              (click)="viewDoc('parentDeathCert')"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+          </p>
+          <p>
+            <strong>Transcripts : </strong>
+            <button
+              class="btn btn-primary btn-sm mx-3"
+              type="button"
+              (click)="viewDoc('transcripts')"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+          </p>
+          <p>
+            <strong>Admission Letter : </strong>
+            <button
+              class="btn btn-primary btn-sm mx-3"
+              type="button"
+              (click)="viewDoc('admLett')"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+          </p>
+
+          <p>
+            <strong>Leaving Certificate : </strong>
+            <button
+              class="btn btn-primary btn-sm mx-3"
+              type="button"
+              (click)="viewDoc('leavCert')"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+          </p>
+
+          <p>
+            <strong>Fee Structure : </strong>
+            <button
+              class="btn btn-primary btn-sm mx-3"
+              type="button"
+              (click)="viewDoc('feeStruct')"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Approval Details</h5>
+
+          <p class="d-flex justify-content-between">
+            <strong>Ward Stage : </strong>
+            <span class="badge bg-info mr-1">
+              {{ studDetails["wardStage"] }}
+            </span>
+          </p>
+          <hr />
+          <p class="d-flex justify-content-between">
+            <strong>County Stage : </strong>
+            <span class="badge bg-info mr-1">
+              {{ studDetails["countyStage"] }}
+            </span>
+          </p>
+          <hr />
+          <p class="d-flex justify-content-between">
+            <strong>Ministry Stage : </strong>
+            <span class="badge bg-info mr-1">
+              {{ studDetails["ministryStage"] }}
+            </span>
+          </p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Approval Actions</h5>
+
+          <p class="d-flex justify-content-between">
+            <button
+              class="btn btn-success btn-sm mx-3"
+              type="button"
+              (click)="approve()"
+              [disabled]="studDetails['wardStage'] !== 'PENDING'"
+              >
+              Approve
+            </button>
+            <button
+              class="btn btn-danger btn-sm mx-3"
+              type="button"
+              (click)="reject()"
+              [disabled]="studDetails['wardStage'] !== 'PENDING'"
+            >
+              Reject
+            </button>
+          </p>
+          <hr />
         </div>
       </div>
     </div>
