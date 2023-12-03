@@ -16,15 +16,14 @@ export class HttpCallsInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    
     if (!request.url.includes('/login')) {
       const headers = new HttpHeaders({
         'ngrok-skip-browser-warning': 'true',
-        'Access-Control-Allow-Origin': '*',
       });
-      request.clone({ headers });
-
       request = request.clone({
         withCredentials: true,
+        headers: headers,
       });
     }
     return next.handle(request);
