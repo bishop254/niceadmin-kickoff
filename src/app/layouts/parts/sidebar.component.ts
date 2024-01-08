@@ -56,17 +56,17 @@ export class SidebarComponent implements OnInit {
         prof: ['MINISTRY', 'FINANCE'],
         childs: [
           {
-            title: 'Approved Students Applications',
+            title: 'County Approved List',
             link: '/bursary/all-county-appr-students',
             icon: 'bi bi-circle',
           },
           {
-            title: 'List County Bulk Approvals',
+            title: 'County Uploaded Docs',
             link: '/bursary/list-bulk-approvals',
             icon: 'bi bi-circle',
           },
           {
-            title: 'Final Students Applications',
+            title: 'Students Payments Approvals',
             link: '/bursary/all-final-appr-students',
             icon: 'bi bi-circle',
           },
@@ -84,12 +84,12 @@ export class SidebarComponent implements OnInit {
         prof: ['COUNTY'],
         childs: [
           {
-            title: 'List Approved Applications',
+            title: 'Ward Approved List',
             link: '/bursary/all-students',
             icon: 'bi bi-circle',
           },
           {
-            title: 'List Bulk Approvals',
+            title: 'Wards Uploaded Docs',
             link: '/bursary/list-bulk-approvals',
             icon: 'bi bi-circle',
           },

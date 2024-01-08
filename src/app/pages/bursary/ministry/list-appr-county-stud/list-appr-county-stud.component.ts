@@ -163,14 +163,12 @@ export class ListApprCountyStudComponent {
         },
         class: 'modal-lg',
       };
-      this.bsModalRef = this.modalService.show(
-        FinApprComponent,
-        initialState
-      );
+      this.bsModalRef = this.modalService.show(FinApprComponent, initialState);
       this.bsModalRef.content.closeBtnName = 'Close';
 
-      this.bsModalRef.onHidden?.emit((val: any) => {
-        console.log(val);
+      this.bsModalRef.onHide?.subscribe((resp) => {
+        console.log(resp);
+
         this.getIndividualData();
       });
     } else {

@@ -97,7 +97,6 @@ export class ListFinalApprStudComponent {
                 };
                 return res;
               }
-
             });
 
             console.log(this.rows);
@@ -157,7 +156,7 @@ export class ListFinalApprStudComponent {
       const initialState: ModalOptions = {
         initialState: {
           title: 'Approve Students',
-          studList: this.studentsToApprove
+          studList: this.studentsToApprove,
         },
         class: 'modal-md',
       };
@@ -166,11 +165,10 @@ export class ListFinalApprStudComponent {
         initialState
       );
       this.bsModalRef.content.closeBtnName = 'Close';
-      this.bsModalRef.content.isEdit = false;
-      this.bsModalRef.content.studList = this.studentsToApprove;
 
-      this.bsModalRef.onHidden?.emit((val: any) => {
-        console.log(val);
+      this.bsModalRef.onHide?.subscribe((resp) => {
+        console.log(resp);
+
         this.getIndividualData();
       });
     } else {

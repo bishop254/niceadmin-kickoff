@@ -135,7 +135,7 @@ export class ListCountyUsersComponent {
       let viewedStudent = eventData['row']['_id'];
       this.router.navigate([`bursary/student/${viewedStudent}`]);
     } else if (eventData.action == 'Edit') {
-      this.editAssessor(eventData.row);
+      // this.editAssessor(eventData.row);
     }
   }
 
@@ -164,55 +164,5 @@ export class ListCountyUsersComponent {
     });
   }
 
-  editAssessor(assessorData: any) {
-    // this.modalRef = this.modalService.open(AddEditAssessorComponent, {
-    //   centered: true,
-    //   animation: true,
-    // });
-    // this.modalRef.componentInstance.formData = assessorData;
-    // this.modalRef.componentInstance.title = "Edit User";
-    // let modalSub = this.modalRef.componentInstance.passEntry.subscribe(
-    //   (receivedEntry: any) => {
-    //     let model = {
-    //       firstName: receivedEntry["firstName"],
-    //       lastName: receivedEntry["lastName"],
-    //       middleName:
-    //         receivedEntry["middleName"] == null
-    //           ? ""
-    //           : receivedEntry["middleName"],
-    //       emailAddress: receivedEntry["emailAddress"],
-    //       nationalId: receivedEntry["nationalId"],
-    //       mobileNumber: receivedEntry["mobileNumber"],
-    //       id: parseInt(assessorData["id"]),
-    //     };
-    //     this.loading = true;
-    //     this.modalRef.close();
-    //     let updateAdmin = this.httpService
-    //       .postReq("/api/v1/admin/employee/edit", model)
-    //       .subscribe({
-    //         next: (resp) => {
-    //           this.rows = [];
-    //           if (resp["status"] === 200) {
-    //             this.toastr.success(resp["message"], "Assessor Updated");
-    //           } else {
-    //             this.toastr.error(resp["message"], "Assessor Not Updated");
-    //           }
-    //           this.getIndividualData(0);
-    //         },
-    //         error: (error) => {
-    //           // Handle the error here
-    //           this.loading = false;
-    //           this.toastr.error(
-    //             error["statusText"] ||
-    //               error["message"] ||
-    //               error.error["message"],
-    //             "Assessor Not Updated"
-    //           );
-    //         },
-    //       });
-    //     this.subs.push(updateAdmin);
-    //   }
-    // );
-    // this.subs.push(modalSub);
-  }
+
 }
