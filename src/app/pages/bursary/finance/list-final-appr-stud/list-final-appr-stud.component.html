@@ -1,0 +1,39 @@
+<div class="pagetitle">
+    <h1>Final Level - Students Page</h1>
+    <div class="d-flex justify-content-between align-items-center">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Students Approved from Finance</li>
+        </ol>
+      </nav>
+  
+      <button class="btn bg-primary" (click)="fincApproval()">
+        <p class="text-white m-0">Final Approval</p>
+      </button>
+    </div>
+  </div>
+  
+  <section class="section">
+    <div class="d-flex justify-content-end"></div>
+  
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card p-1">
+          <ng-container *ngIf="studentsList$ | async"></ng-container>
+          <app-custom-tbl
+            [columns]="columns"
+            [rows]="rows"
+            [actions]="actions"
+            [loadingIndicator]="false"
+            [totalItems]="totalRecords"
+            (outputEvent)="triggerEvent($event)"
+            (selectedRowsEvent)="selectedRowsEvent($event)"
+            (updateFilteredRows)="updateFilteredRowsEvent($event)"
+          >
+          </app-custom-tbl>
+        </div>
+      </div>
+    </div>
+  </section>
+  

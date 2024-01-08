@@ -19,12 +19,17 @@ import { ListApprCountyStudComponent } from './ministry/list-appr-county-stud/li
 import { ListCountyUsersComponent } from './ministry/list-county-users/list-county-users.component';
 import { AddCountyUsersComponent } from './ministry/add-county-users/add-county-users.component';
 import { ViewStudMinLevelComponent } from './ministry/view-stud-min-level/view-stud-min-level.component';
+import { FinApprComponent } from './finance/fin-appr/fin-appr.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ListFinalApprStudComponent } from './finance/list-final-appr-stud/list-final-appr-stud.component';
+import { FinalApprCicComponent } from './finance/final-appr-cic/final-appr-cic.component';
 
 const bursariesRoutes: Routes = [
   { path: 'list-bulk-approvals', component: ListBulkApprovedComponent },
   { path: 'students', component: ListStudentsComponent },
   { path: 'all-students', component: ListAllStudentsComponent },
   { path: 'all-county-appr-students', component: ListApprCountyStudComponent },
+  { path: 'all-final-appr-students', component: ListFinalApprStudComponent },
   { path: 'all-students-cm', component: ListAllStudCmComponent },
   { path: 'student/:id', component: ViewStudentComponent },
   { path: 'student/ward-status/:id', component: ViewStudCountyLevelComponent },
@@ -52,6 +57,9 @@ const bursariesRoutes: Routes = [
     ListCountyUsersComponent,
     AddCountyUsersComponent,
     ViewStudMinLevelComponent,
+    FinApprComponent,
+    ListFinalApprStudComponent,
+    FinalApprCicComponent,
   ],
   imports: [
     CommonModule,

@@ -30,6 +30,7 @@ export class ViewStudMinLevelComponent {
   studentData$: Observable<any> = of([]);
   wardStatData$: Observable<any> = of({});
   countyStatData$: Observable<any> = of({});
+  minStatData$: Observable<any> = of({});
 
   bsModalRef?: BsModalRef;
 
@@ -43,6 +44,7 @@ export class ViewStudMinLevelComponent {
   studDetails: any;
   studWardStatus: any;
   studCountyStatus: any;
+  studMinStatus: any;
 
   constructor(
     private httpService: HttpServService,
@@ -65,6 +67,7 @@ export class ViewStudMinLevelComponent {
     this.getIndividualData();
     this.getIndividualStatus();
     this.getIndividualCountyStatus();
+    this.getIndividualMinStatus();
   }
 
   getIndividualData(page: number = 0, size: number = 50): void {
@@ -154,6 +157,32 @@ export class ViewStudMinLevelComponent {
       );
   }
 
+  getIndividualMinStatus(): void {
+    this.loading = true;
+
+    this.minStatData$ = this.httpService
+      .getReq(`bursary/student/ministry-status/${this.studRef}`)
+      .pipe(
+        map((resp: any) => {
+          this.studMinStatus = resp['data'];
+
+          return this.studMinStatus;
+        }),
+        catchError((error: any) => {
+          this.loading = false;
+          if (error instanceof TimeoutError) {
+            this.toastr.error(error['message'], 'API Timeout');
+          } else {
+            this.toastr.error(
+              error['statusText'] || error['message'],
+              'Data Not Fetched'
+            );
+          }
+          return of([]);
+        })
+      );
+  }
+
   triggerEvent(data: string) {
     let eventData = JSON.parse(data);
 
@@ -169,5 +198,16 @@ export class ViewStudMinLevelComponent {
 
   viewStudent() {
     this.router.navigate([`/bursary/student/${this.studDetails['_id']}`]);
+  }
+
+  viewDoc(type: string) {
+
+    this.httpService
+      .getFileReq(`bursary/student/file/${type}`)
+      .subscribe((resp: any) => {
+        let blob = new Blob([resp], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(blob);
+        window.open(fileURL, '_blank');
+      });
   }
 }

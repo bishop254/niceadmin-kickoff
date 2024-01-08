@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h5 class="modal-title pull-left">{{ title }}</h5>
+  <button
+    type="button"
+    class="btn-close close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="d-flex flex-row flex-wrap justify-content-around">
+    <div *ngFor="let stud of studList">
+      <span class="badge bg-primary mr-1"> {{ stud["studentName"] }}</span>
+    </div>
+  </div>
+  <hr>
+  <h5>Total : KES {{totalAmt}}</h5>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="submit()">
+    Submit
+  </button>
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">
+    {{ closeBtnName }}
+  </button>
+</div>

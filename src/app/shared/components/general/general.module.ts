@@ -7,6 +7,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
   declarations: [CustomTblComponent, CustomTblHeaderComponent],
   imports: [CommonModule, NgxDatatableModule],
-  exports: [CustomTblComponent, CustomTblHeaderComponent]
+  exports: [CustomTblComponent, CustomTblHeaderComponent, NgxDatatableModule],
 })
 export class GeneralModule {}

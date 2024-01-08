@@ -88,9 +88,6 @@
           </p> -->
         </div>
       </div>
-    </div>
-
-    <div class="col-lg-4">
       <div class="card" *ngIf="wardStatData$ | async">
         <div class="card-body">
           <h5 class="card-title">Ward Stage Approval Details</h5>
@@ -106,6 +103,9 @@
           </p>
         </div>
       </div>
+    </div>
+
+    <div class="col-lg-4">
       <div class="card" *ngIf="countyStatData$ | async">
         <div class="card-body">
           <h5 class="card-title">County Stage Approval Details</h5>
@@ -119,6 +119,36 @@
             <strong>Amount :</strong>
             KES {{ studCountyStatus["awardedAmount"] }}
           </p>
+        </div>
+      </div>
+
+      <div class="card" *ngIf="minStatData$ | async">
+        <div class="card-body">
+          <h5 class="card-title">Ministry/Finance Stage Approval Details</h5>
+          <hr />
+
+          <p>
+            <strong>Approval Ref :</strong>
+            {{ studMinStatus["_id"] }}
+          </p>
+          <p>
+            <strong>Amount :</strong>
+            KES {{ studMinStatus["awardedAmount"] }}
+          </p>
+
+          <hr />
+          <div *ngFor="let doc of studMinStatus['docs']">
+            <p>
+              <strong>{{ doc }} :</strong>
+              <button
+                class="btn btn-primary btn-sm mx-3"
+                type="button"
+                (click)="viewDoc(doc)"
+              >
+                <i class="bi bi-eye"></i>
+              </button>
+            </p>
+          </div>
         </div>
       </div>
     </div>

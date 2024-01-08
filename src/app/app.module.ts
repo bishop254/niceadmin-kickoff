@@ -29,6 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpCallsInterceptor } from './shared/interceptors/http-calls.interceptor';
 import { ApproveStudentComponent } from './pages/students/approve-student/approve-student.component';
 import { BulkApprovalComponent } from './pages/students/bulk-approval/bulk-approval.component';
+import { ScrollbarHelper, DimensionsHelper, ColumnChangesService } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,9 @@ import { BulkApprovalComponent } from './pages/students/bulk-approval/bulk-appro
       useClass: HttpCallsInterceptor,
       multi: true,
     },
+    ScrollbarHelper, DimensionsHelper, ColumnChangesService
   ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

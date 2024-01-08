@@ -238,8 +238,7 @@
         *ngIf="
           column.name === 'Status' ||
           column.name === 'Active' ||
-          column.name === 'Assigned' ||
-          column.name === 'Approved'
+          column.name === 'Assigned'
         "
         [resizeable]="false"
         [name]="column.name"
@@ -295,6 +294,30 @@
             }}"
           >
             {{ row.gender === "M" ? "Male" : "Female" }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column
+        *ngIf="column.prop === 'isFinal'"
+        [resizeable]="false"
+        [name]="column.name"
+        [prop]="column.prop"
+        [draggable]="false"
+        [maxWidth]="100"
+        [minWidth]="100"
+      >
+        <ng-template
+          let-row="row"
+          let-value="value"
+          ngx-datatable-cell-template
+        >
+          <span
+            class="{{
+              row.isFinal ? 'badge bg-success mr-1' : 'badge bg-primary mr-1'
+            }}"
+          >
+            {{ row.isFinal ? "Yes" : "No" }}
           </span>
         </ng-template>
       </ngx-datatable-column>

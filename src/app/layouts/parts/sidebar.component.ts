@@ -26,20 +26,48 @@ export class SidebarComponent implements OnInit {
       //   icon: 'bi bi-person',
       // },
 
+      // {
+      //   title: 'Ministry Management',
+      //   link: '',
+      //   icon: 'bi bi-file-earmark',
+      //   prof: ['MINISTRY'],
+      //   childs: [
+      //     {
+      //       title: 'List County Approved Applications',
+      //       link: '/bursary/all-county-appr-students',
+      //       icon: 'bi bi-circle',
+      //     },
+      //     {
+      //       title: 'List County Bulk Approvals',
+      //       link: '/bursary/list-bulk-approvals',
+      //       icon: 'bi bi-circle',
+      //     },
+      //     // {
+      //     //   title: "Login",
+      //     //   link: '/login',
+      //     //   icon: "bi bi-circle",
+      //     // },
+      //   ],
+      // },
       {
-        title: 'Ministry Management',
+        title: 'Finance Management',
         link: '',
         icon: 'bi bi-file-earmark',
-        prof: ['MINISTRY'],
+        prof: ['MINISTRY', 'FINANCE'],
         childs: [
           {
-            title: 'List County Approved Applications',
+            title: 'Approved Students Applications',
             link: '/bursary/all-county-appr-students',
             icon: 'bi bi-circle',
           },
           {
             title: 'List County Bulk Approvals',
             link: '/bursary/list-bulk-approvals',
+            icon: 'bi bi-circle',
+          },
+          {
+            title: 'Final Students Applications',
+            link: '/bursary/all-final-appr-students',
             icon: 'bi bi-circle',
           },
           // {

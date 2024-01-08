@@ -1,0 +1,148 @@
+<div class="modal-header">
+  <h5 class="modal-title pull-left">{{ title }}</h5>
+  <button
+    type="button"
+    class="btn-close close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="d-flex flex-column justify-content-between align-items-center">
+    <!-- 
+    <div *ngFor="let stud of studList">
+      <span class="badge bg-primary mr-1"> {{ stud["name"] }}</span> -
+      <span
+        class="badge bg-primary mr-1"
+      >
+        {{ stud["countyAmt"] }}</span
+      >
+
+      <input type="number" *ngIf="" />
+    </div> -->
+
+    <ngx-datatable
+      #mydatatable
+      class="bootstrap w-100 m-auto border p-2"
+      [headerHeight]="50"
+      [limit]="5"
+      [columnMode]="ColumnMode.force"
+      [footerHeight]="50"
+      [rowHeight]="40"
+      [rows]="studList"
+    >
+      <ngx-datatable-column name="Name" prop="name">
+        <ng-template ngx-datatable-cell-template let-value="value">
+          {{ value }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Amount" prop="countyAmt">
+        <ng-template
+          ngx-datatable-cell-template
+          let-rowIndex="rowIndex"
+          let-value="value"
+          let-row="row"
+        >
+          <span
+            title="Double click to edit"
+            (dblclick)="editing[rowIndex + '-amt'] = true"
+            *ngIf="!editing[rowIndex + '-amt']"
+          >
+            {{ value }}
+          </span>
+          <input
+            autofocus
+            (blur)="updateValue($event, 'amt', rowIndex)"
+            *ngIf="editing[rowIndex + '-amt']"
+            type="text"
+            [value]="value"
+          />
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column
+        [sortable]="false"
+        [draggable]="false"
+        [resizeable]="false"
+        name="Actions"
+        prop="name"
+        [maxWidth]="70"
+      >
+        <ng-template
+          class="parent-item"
+          let-row="row"
+          let-value="value"
+          ngx-datatable-cell-template
+        >
+          <span class="parent-item">
+            <div class="example">
+              <button
+                class="btn btn-danger btn-sm"
+                type="button"
+                (click)="removeStud(row)"
+              >
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>
+<form class="m-2" id="docForm">
+  <div class="form-group">
+    <label for="file">Supporting financial documents</label>
+    <div class="d-flex flex-row justify-content-between m-2">
+      <input
+        type="file"
+        class="form-control w-75 h-75 m-1"
+        (change)="onFileSelected($event)"
+        id="file"
+        placeholder="Select documents/receipts/cheques"
+        accept="application/pdf"
+      />
+
+      <input
+        type="text"
+        class="form-control w-75 h-75 m-1"
+        id="filename"
+        placeholder="Description"
+      />
+
+      <button
+        type="button"
+        class="btn btn-success m-1"
+        [disabled]="approvalDoc == null"
+        (click)="addDoc()"
+      >
+        Add
+      </button>
+    </div>
+  </div>
+</form>
+
+<div
+  class="d-flex flex-row justify-content-between w-75 m-auto"
+  *ngFor="let doc of documents; let index"
+>
+  <span class=" m-1"> {{ doc["name"] }}</span>
+  <span class=" m-1"> {{ doc["desc"] }}</span>
+
+  <button
+    class="btn btn-danger btn-s m-1"
+    type="button"
+    (click)="removeDoc(index)"
+  >
+    <i class="bi bi-x"></i>
+  </button>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="submit()" [disabled]="studList.length == 0 || documents.length == 0">
+    Submit
+  </button>
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">
+    {{ closeBtnName }}
+  </button>
+</div>

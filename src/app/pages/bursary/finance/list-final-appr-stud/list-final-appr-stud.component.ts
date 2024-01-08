@@ -10,18 +10,17 @@ import {
   catchError,
   TimeoutError,
 } from 'rxjs';
-import { BulkApprovalComponent } from 'src/app/pages/students/bulk-approval/bulk-approval.component';
 import { GlobalServService } from 'src/app/shared/services/global-serv.service';
 import { HttpServService } from 'src/app/shared/services/http-serv.service';
-import { AddEditBursaryComponent } from '../../add-edit-bursary/add-edit-bursary.component';
-import { FinApprComponent } from '../../finance/fin-appr/fin-appr.component';
+import { FinApprComponent } from '../fin-appr/fin-appr.component';
+import { FinalApprCicComponent } from '../final-appr-cic/final-appr-cic.component';
 
 @Component({
-  selector: 'app-list-appr-county-stud',
-  templateUrl: './list-appr-county-stud.component.html',
-  styleUrls: ['./list-appr-county-stud.component.scss'],
+  selector: 'app-list-final-appr-stud',
+  templateUrl: './list-final-appr-stud.component.html',
+  styleUrls: ['./list-final-appr-stud.component.scss'],
 })
-export class ListApprCountyStudComponent {
+export class ListFinalApprStudComponent {
   loading: boolean = true;
 
   rows: any = [];
@@ -30,17 +29,11 @@ export class ListApprCountyStudComponent {
   defaultNavActiveId = 1;
 
   columns = [
-    { name: 'Full Name', prop: 'name' },
+    { name: 'Full Name', prop: 'studentName' },
     // { name: 'Bursary Description', prop: 'bursary_description' },
-    { name: 'Gender', prop: 'gender' },
-    { name: 'DOB', prop: 'dob' },
-    { name: 'School', prop: 'instName' },
-    { name: 'Form/Year', prop: 'formYear' },
-    { name: 'Mobile No', prop: 'phone' },
-    { name: 'Course', prop: 'course' },
-    { name: 'Ward', prop: 'ward' },
-    // { name: 'Notification Date', prop: 'notification_date' },
-    { name: 'Ministry Stage', prop: 'ministryStage' },
+    { name: 'Ref No', prop: 'studRef' },
+    { name: 'Amount', prop: 'awardedAmount' },
+    { name: 'Approved', prop: 'isFinal' },
     { name: 'Actions', prop: '_id' },
   ];
 
@@ -79,52 +72,58 @@ export class ListApprCountyStudComponent {
       size: size,
     };
 
-    this.studentsList$ = this.httpService.getReq('bursary/students').pipe(
-      map((resp: any) => {
-        console.log(resp);
-        console.log(resp);
+    this.studentsList$ = this.httpService
+      .getReq('bursary/students/ministry-status')
+      .pipe(
+        map((resp: any) => {
+          console.log(resp);
+          console.log(resp);
 
-        if (resp['statusCode'] === 200) {
-          let response = resp['data'];
+          if (resp['statusCode'] === 200) {
+            let response = resp['data'];
 
-          this.rows = response.map((item: any, index: any) => {
-            if (item['countyStage'] === 'APPROVED') {
-              item['dob'] = this.globalService.formatDate(item['dob']);
+            this.rows = response.map((item: any, index: any) => {
+              if (item['isFinal'] == undefined) {
+                const res = {
+                  ...item,
+                  ['isFinal']: false,
+                  frontendId: index + 1,
+                };
+                return res;
+              } else {
+                const res = {
+                  ...item,
+                  frontendId: index + 1,
+                };
+                return res;
+              }
 
-              const res = {
-                ...item,
-                frontendId: index + 1,
-              };
+            });
 
-              return res;
-            }
-          });
+            console.log(this.rows);
 
-          this.rows = this.rows.filter((row: any) => row !== undefined);
-          console.log(this.rows);
+            this.totalRecords = this.rows.length;
 
-          this.totalRecords = this.rows.length;
-
+            this.loading = false;
+            return this.rows;
+          } else {
+            this.loading = false;
+            return of([]);
+          }
+        }),
+        catchError((error: any) => {
           this.loading = false;
-          return this.rows;
-        } else {
-          this.loading = false;
+          if (error instanceof TimeoutError) {
+            this.toastr.error(error['message'], 'API Timeout');
+          } else {
+            this.toastr.error(
+              error['statusText'] || error['message'],
+              'Data Not Fetched'
+            );
+          }
           return of([]);
-        }
-      }),
-      catchError((error: any) => {
-        this.loading = false;
-        if (error instanceof TimeoutError) {
-          this.toastr.error(error['message'], 'API Timeout');
-        } else {
-          this.toastr.error(
-            error['statusText'] || error['message'],
-            'Data Not Fetched'
-          );
-        }
-        return of([]);
-      })
-    );
+        })
+      );
   }
 
   updateColumns(updatedColumns: any) {
@@ -137,7 +136,7 @@ export class ListApprCountyStudComponent {
     if (eventData.action == 'View') {
       console.log(eventData['row']);
 
-      let viewedStudent = eventData['row']['_id'];
+      let viewedStudent = eventData['row']['studRef'];
       this.router.navigate([`bursary/student/county-status/${viewedStudent}`]);
     }
   }
@@ -149,7 +148,7 @@ export class ListApprCountyStudComponent {
   selectedRowsEvent(data: any[]) {
     this.studentsToApprove = data;
     this.studentsToApprove = [...this.studentsToApprove].filter(
-      (stud) => stud['ministryStage'] === 'PENDING'
+      (stud) => stud['isFinal'] === false
     );
   }
 
@@ -157,17 +156,18 @@ export class ListApprCountyStudComponent {
     if (this.studentsToApprove.length > 0) {
       const initialState: ModalOptions = {
         initialState: {
-          title: 'Confirm/Edit Awarded Amounts',
-          countyAppr: true,
-          studList: this.studentsToApprove,
+          title: 'Approve Students',
+          studList: this.studentsToApprove
         },
-        class: 'modal-lg',
+        class: 'modal-md',
       };
       this.bsModalRef = this.modalService.show(
-        FinApprComponent,
+        FinalApprCicComponent,
         initialState
       );
       this.bsModalRef.content.closeBtnName = 'Close';
+      this.bsModalRef.content.isEdit = false;
+      this.bsModalRef.content.studList = this.studentsToApprove;
 
       this.bsModalRef.onHidden?.emit((val: any) => {
         console.log(val);

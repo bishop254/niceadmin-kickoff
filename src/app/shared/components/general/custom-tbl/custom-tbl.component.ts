@@ -88,6 +88,7 @@ export class CustomTblComponent {
         col['prop'] !== 'wardStage' &&
         col['prop'] !== 'countyStage' &&
         col['prop'] !== 'ministryStage' &&
+        col['prop'] !== 'isFinal' &&
         col['prop'] !== 'channel'
     );
 
@@ -111,6 +112,7 @@ export class CustomTblComponent {
         col['prop'] == 'wardStage' ||
         col['prop'] == 'countyStage' ||
         col['prop'] == 'ministryStage' ||
+        col['prop'] == 'isFinal' ||
         col['prop'] == 'channel'
     );
     this.configureSelectParams();
@@ -173,6 +175,19 @@ export class CustomTblComponent {
         ];
       }
 
+      if (item['prop'] == 'isFinal') {
+        item['options'] = [
+          {
+            val: true,
+            label: 'Yes',
+          },
+          {
+            val: false,
+            label: 'No',
+          },
+        ];
+      }
+
       if (
         item['prop'] !== 'systemRole' &&
         item['prop'] !== 'active' &&
@@ -187,6 +202,7 @@ export class CustomTblComponent {
         item['prop'] !== 'wardStage' &&
         item['prop'] !== 'countyStage' &&
         item['prop'] !== 'ministryStage' &&
+        item['prop'] !== 'isFinal' &&
         item['prop'] !== 'channel'
       ) {
         item['options'] = [
@@ -221,7 +237,6 @@ export class CustomTblComponent {
         col.prop !== 'updatedAt' &&
         col.prop !== 'firstTimeLogin' &&
         col.prop !== 'updatedOn' &&
-        col.prop !== 'approved' &&
         col.prop !== 'assigned' &&
         col.prop !== 'deviceStatus' &&
         col.prop !== 'taskStatus' &&
@@ -232,6 +247,7 @@ export class CustomTblComponent {
         col.prop !== 'wardStage' &&
         col.prop !== 'countyStage' &&
         col.prop !== 'ministryStage' &&
+        col.prop !== 'isFinal' &&
         col.prop !== 'channel'
       ) {
         col['maxW'] =
