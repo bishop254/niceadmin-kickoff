@@ -1,0 +1,8 @@
+version: '2.0'
+
+services:
+  web: 
+    build: .
+    restart: always
+    ports: 
+      - 4200:80
