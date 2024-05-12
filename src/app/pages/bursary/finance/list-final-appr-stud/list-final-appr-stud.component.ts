@@ -136,7 +136,7 @@ export class ListFinalApprStudComponent {
       console.log(eventData['row']);
 
       let viewedStudent = eventData['row']['studRef'];
-      this.router.navigate([`bursary/student/county-status/${viewedStudent}`]);
+      this.router.navigate([`admin/bursary/student/county-status/${viewedStudent}`]);
     }
   }
 

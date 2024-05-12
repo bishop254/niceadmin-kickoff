@@ -197,7 +197,7 @@ export class ViewStudMinLevelComponent {
   }
 
   viewStudent() {
-    this.router.navigate([`/bursary/student/${this.studDetails['_id']}`]);
+    this.router.navigate([`admin/bursary/student/${this.studDetails['_id']}`]);
   }
 
   viewDoc(type: string) {

@@ -84,7 +84,7 @@ export class AddEditBursaryComponent implements OnInit {
             } else {
               // this.toastr.error(resp['message'], 'Assessor Not Staged');
             }
-            // this.router.navigate(['/assessors/staged-assessors']);
+            // this.router.navigate(['admin/assessors/staged-assessors']);
           },
           error: (error) => {
             // Handle the error here
