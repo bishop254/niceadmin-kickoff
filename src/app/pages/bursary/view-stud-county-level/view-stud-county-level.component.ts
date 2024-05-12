@@ -197,6 +197,6 @@ export class ViewStudCountyLevelComponent {
   }
 
   viewStudent() {
-    this.router.navigate([`/admin/bursary/student/${this.studDetails['_id']}`]);
+    this.router.navigate([`bursary/student/${this.studDetails['_id']}`]);
   }
 }

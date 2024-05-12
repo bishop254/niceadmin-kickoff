@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('ward', resp['data']['ward'] || '');
 
           this.toastr.success('Login Success');
-          this.router.navigate(['/admin/dashboard']);
+          this.router.navigate(['dashboard']);
 
           return resp;
         } else {
