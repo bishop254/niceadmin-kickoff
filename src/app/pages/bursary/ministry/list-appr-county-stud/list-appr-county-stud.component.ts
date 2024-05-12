@@ -138,7 +138,7 @@ export class ListApprCountyStudComponent {
       console.log(eventData['row']);
 
       let viewedStudent = eventData['row']['_id'];
-      this.router.navigate([`admin/bursary/student/county-status/${viewedStudent}`]);
+      this.router.navigate([`/admin/bursary/student/county-status/${viewedStudent}`]);
     }
   }
 

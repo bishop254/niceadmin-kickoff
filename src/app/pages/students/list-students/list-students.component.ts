@@ -137,7 +137,7 @@ export class ListStudentsComponent {
       console.log(eventData['row']);
 
       let viewedStudent = eventData['row']['_id'];
-      this.router.navigate([`admin/bursary/student/${viewedStudent}`]);
+      this.router.navigate([`/admin/bursary/student/${viewedStudent}`]);
     }
   }
 
