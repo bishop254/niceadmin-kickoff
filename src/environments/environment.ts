@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  base_url: 'https://34.125.104.79/',
-  auth_url: 'https://34.125.104.79/',
+  base_url: 'https://34.125.104.79/bck-bursary/',
+  auth_url: 'https://34.125.104.79/bck-auth/',
   // base_url: 'http://localhost:3000/',
   // auth_url: 'http://localhost:3001/',
 };

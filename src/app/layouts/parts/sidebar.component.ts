@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit {
     this.menuItems = [
       {
         title: 'Dashboard',
-        link: '/dashboard',
+        link: '/admin/dashboard',
         icon: 'bi bi-grid',
       },
       // {
@@ -57,17 +57,17 @@ export class SidebarComponent implements OnInit {
         childs: [
           {
             title: 'County Approved List',
-            link: '/bursary/all-county-appr-students',
+            link: '/admin/bursary/all-county-appr-students',
             icon: 'bi bi-circle',
           },
           {
             title: 'County Uploaded Docs',
-            link: '/bursary/list-bulk-approvals',
+            link: '/admin/bursary/list-bulk-approvals',
             icon: 'bi bi-circle',
           },
           {
             title: 'Students Payments Approvals',
-            link: '/bursary/all-final-appr-students',
+            link: '/admin/bursary/all-final-appr-students',
             icon: 'bi bi-circle',
           },
           // {
@@ -85,12 +85,12 @@ export class SidebarComponent implements OnInit {
         childs: [
           {
             title: 'Ward Approved List',
-            link: '/bursary/all-students',
+            link: '/admin/bursary/all-students',
             icon: 'bi bi-circle',
           },
           {
             title: 'Wards Uploaded Docs',
-            link: '/bursary/list-bulk-approvals',
+            link: '/admin/bursary/list-bulk-approvals',
             icon: 'bi bi-circle',
           },
           // {
@@ -108,7 +108,7 @@ export class SidebarComponent implements OnInit {
         childs: [
           {
             title: 'County Users',
-            link: '/bursary/county-users',
+            link: '/admin/bursary/county-users',
             icon: 'bi bi-circle',
           },
           // {
@@ -127,7 +127,7 @@ export class SidebarComponent implements OnInit {
         childs: [
           {
             title: 'List Applications',
-            link: '/bursary/students',
+            link: '/admin/bursary/students',
             icon: 'bi bi-circle',
           },
         ],
@@ -140,7 +140,7 @@ export class SidebarComponent implements OnInit {
         childs: [
           {
             title: 'List Ward Applications',
-            link: '/bursary/all-students-cm',
+            link: '/admin/bursary/all-students-cm',
             icon: 'bi bi-circle',
           },
           {
@@ -158,7 +158,7 @@ export class SidebarComponent implements OnInit {
         childs: [
           {
             title: 'List Ward Applications',
-            link: '/bursary/all-students-cm',
+            link: '/admin/bursary/all-students-cm',
             icon: 'bi bi-circle',
           },
         ],
