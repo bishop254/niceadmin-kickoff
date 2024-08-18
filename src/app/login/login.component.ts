@@ -58,6 +58,8 @@ export class LoginComponent implements OnInit {
       catchError((err) => {
         console.error(err);
 
+        this.toastr.error(err['statusText'] ?? err['error']['message'], 'Login Failure');
+
         this.isLoading = false;
         if (err['error'] !== undefined) {
           // this.toastr.error(err['error']['message'], 'Login Failure');

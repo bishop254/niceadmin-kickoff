@@ -58,6 +58,15 @@ h6 {
 --------------------------------------------------------------*/
 .pagetitle {
   margin-bottom: 10px;
+  background: white;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 8px;
+
+  ol{
+    margin-bottom: 0 !important;
+  }
 }
 
 .pagetitle h1 {
