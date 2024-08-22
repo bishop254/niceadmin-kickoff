@@ -16,7 +16,7 @@ import { Component, OnInit } from '@angular/core';
   styles: [
     `
       .main {
-        background-image: url('assets/img/3611852.jpg');
+        background-image: url('/assets/img/3611852.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
