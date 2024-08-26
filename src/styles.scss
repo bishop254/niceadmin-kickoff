@@ -1,16 +1,31 @@
-@import 'bootstrap/scss/bootstrap.scss';
-@import 'bootstrap-icons/font/bootstrap-icons.scss';
-@import './assets/style.scss';
+@import "bootstrap/scss/bootstrap.scss";
+@import "bootstrap-icons/font/bootstrap-icons.scss";
+@import "./assets/style.scss";
 /* Importing Bootstrap SCSS file. */
 @import "./node_modules/bootstrap/scss/bootstrap";
 
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
 
-
 //Toastr Styling
-@import 'ngx-toastr/toastr-bs5-alert';
+@import "ngx-toastr/toastr-bs5-alert";
 
-@import 'node_modules/@swimlane/ngx-datatable/index.css';
-@import 'node_modules/@swimlane/ngx-datatable/themes/material.scss';
-@import 'node_modules/@swimlane/ngx-datatable/assets/icons.css';
+@import "node_modules/@swimlane/ngx-datatable/index.css";
+@import "node_modules/@swimlane/ngx-datatable/themes/material.scss";
+@import "node_modules/@swimlane/ngx-datatable/assets/icons.css";
+
+.form-group {
+  position: relative;
+
+  label {
+    position: absolute;
+    top: -30%;
+    left: 3%;
+    background-color: #fff;
+  }
+
+  input {
+    margin: 1rem 0;
+
+  }
+}

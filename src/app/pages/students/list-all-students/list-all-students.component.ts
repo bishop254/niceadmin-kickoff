@@ -149,7 +149,7 @@ export class ListAllStudentsComponent {
   selectedRowsEvent(data: any[]) {
     this.studentsToApprove = data;
     this.studentsToApprove = [...this.studentsToApprove].filter(
-      (stud) => stud['countyStage'] === 'APPROVED'
+      (stud) => stud['countyStage'] === 'PENDING'
     );
   }
 
@@ -175,7 +175,7 @@ export class ListAllStudentsComponent {
       });
     } else {
       this.toastr.info(
-        'Select multiple students that match the final document to upload'
+        'Select multiple students that are not yet approved from county stage'
       );
     }
   }
