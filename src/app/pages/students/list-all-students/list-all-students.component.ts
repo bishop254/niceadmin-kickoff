@@ -149,7 +149,7 @@ export class ListAllStudentsComponent {
   selectedRowsEvent(data: any[]) {
     this.studentsToApprove = data;
     this.studentsToApprove = [...this.studentsToApprove].filter(
-      (stud) => stud['countyStage'] === 'PENDING'
+      (stud) => stud['countyStage'] === 'APPROVED' && stud['ministryStage'] === 'PENDING'
     );
   }
 
