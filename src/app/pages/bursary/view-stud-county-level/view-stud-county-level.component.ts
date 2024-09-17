@@ -43,8 +43,8 @@ export class ViewStudCountyLevelComponent {
   studRef: string = '';
 
   studDetails: any;
-  studWardStatus: any;
-  studCountyStatus: any;
+  studWardStatus: any = {};
+  studCountyStatus: any = {};
 
   constructor(
     private httpService: HttpServService,
@@ -178,7 +178,7 @@ export class ViewStudCountyLevelComponent {
           ? `Approve Student : ${this.studRef}`
           : `Reject Student : ${this.studRef}`,
         apprStat: flag,
-        apprData: this.studWardStatus['awardedAmount'],
+        apprData: this.studWardStatus['awardedAmount'] || 5000,
         studRef: this.studRef,
       },
       class: 'modal-md',

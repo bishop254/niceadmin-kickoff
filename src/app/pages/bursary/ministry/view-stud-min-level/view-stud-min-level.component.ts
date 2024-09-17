@@ -42,9 +42,9 @@ export class ViewStudMinLevelComponent {
   studRef: string = '';
 
   studDetails: any;
-  studWardStatus: any;
-  studCountyStatus: any;
-  studMinStatus: any;
+  studWardStatus: any = {};
+  studCountyStatus: any = {};
+  studMinStatus: any = {};
 
   constructor(
     private httpService: HttpServService,
