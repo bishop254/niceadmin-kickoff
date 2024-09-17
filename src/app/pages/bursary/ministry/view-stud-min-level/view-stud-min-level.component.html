@@ -95,11 +95,11 @@
 
           <p>
             <strong>Approval Ref :</strong>
-            {{ studWardStatus["_id"] }}
+            {{ studWardStatus["_id"] || '' }}
           </p>
           <p>
             <strong>Amount :</strong>
-            KES {{ studWardStatus["awardedAmount"] }}
+            KES {{ studWardStatus["awardedAmount"] || '' }}
           </p>
         </div>
       </div>
@@ -113,11 +113,11 @@
 
           <p>
             <strong>Approval Ref :</strong>
-            {{ studCountyStatus["_id"] }}
+            {{ studCountyStatus["_id"] || '' }}
           </p>
           <p>
             <strong>Amount :</strong>
-            KES {{ studCountyStatus["awardedAmount"] }}
+            KES {{ studCountyStatus["awardedAmount"] || '' }}
           </p>
         </div>
       </div>
@@ -129,11 +129,11 @@
 
           <p>
             <strong>Approval Ref :</strong>
-            {{ studMinStatus["_id"] }}
+            {{ studMinStatus["_id"] || '' }}
           </p>
           <p>
             <strong>Amount :</strong>
-            KES {{ studMinStatus["awardedAmount"] }}
+            KES {{ studMinStatus["awardedAmount"] || '' }}
           </p>
 
           <hr />

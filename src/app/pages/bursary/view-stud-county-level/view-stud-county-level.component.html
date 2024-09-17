@@ -149,30 +149,22 @@
         <div class="card-body text-center">
           <h4>Student Details</h4>
           <hr />
-          <div
-            class="d-flex flex-column flex-wrap justify-content-center align-items-center"
-          >
+          <div class="d-flex flex-column flex-wrap justify-content-center align-items-center">
             <div>
               <img src="./assets/img/user.png" alt="" />
             </div>
             <div class="detailsCont m-1">
               <h5 class="card-title">{{ studDetails["name"] }}</h5>
-              <button
-                class="btn btn-primary btn-sm w-100"
-                (click)="viewStudent()"
-                type="button"
-              >
+              <button class="btn btn-primary btn-sm w-100" (click)="viewStudent()" type="button">
                 View More Details
               </button>
               <p>
                 <strong>Gender : </strong>
-                <span
-                  class="{{
+                <span class="{{
                     studDetails['gender'] === 'M'
                       ? 'badge bg-success mr-1'
                       : 'badge bg-primary mr-1'
-                  }}"
-                >
+                  }}">
                   {{ studDetails["gender"] === "M" ? "Male" : "Female" }}
                 </span>
               </p>
@@ -201,9 +193,7 @@
         <div class="card-body text-center">
           <h4>School</h4>
           <hr />
-          <div
-            class="d-flex flex-row flex-wrap justify-content-center align-items-start"
-          >
+          <div class="d-flex flex-row flex-wrap justify-content-center align-items-start">
             <div class="detailsCont m-2">
               <p>
                 <strong>School/Institution :</strong>
@@ -224,9 +214,7 @@
         <div class="card-body text-center">
           <h4>Sponsor Details</h4>
           <hr />
-          <div
-            class="d-flex flex-row flex-wrap justify-content-center align-items-start"
-          >
+          <div class="d-flex flex-row flex-wrap justify-content-center align-items-start">
             <div class="detailsCont m-2">
               <p>
                 <strong>Sponsor Name :</strong> {{ studDetails["sponsorName"] }}
@@ -259,17 +247,15 @@
         <div class="card-body text-center">
           <h4>Ward Stage Approval Details</h4>
           <hr />
-          <div
-            class="d-flex flex-row flex-wrap justify-content-center align-items-start"
-          >
+          <div class="d-flex flex-row flex-wrap justify-content-center align-items-start">
             <div class="detailsCont m-2">
               <p>
                 <strong>Approval Ref :</strong>
-                {{ studWardStatus["_id"] }}
+                {{ studWardStatus["_id"] || ''}}
               </p>
               <p>
                 <strong>Amount :</strong>
-                KES {{ studWardStatus["awardedAmount"] }}
+                KES {{ studWardStatus["awardedAmount"] || '' }}
               </p>
             </div>
           </div>
@@ -277,17 +263,15 @@
         <div class="card-body text-center">
           <h4>County Stage Approval Details</h4>
           <hr />
-          <div
-            class="d-flex flex-row flex-wrap justify-content-center align-items-start"
-          >
+          <div class="d-flex flex-row flex-wrap justify-content-center align-items-start">
             <div class="detailsCont m-2">
               <p>
                 <strong>Approval Ref :</strong>
-                {{ studCountyStatus["_id"] }}
+                {{ studCountyStatus["_id"] || '' }}
               </p>
               <p>
                 <strong>Amount :</strong>
-                KES {{ studCountyStatus["awardedAmount"] }}
+                KES {{ studCountyStatus["awardedAmount"] || '' }}
               </p>
             </div>
           </div>
@@ -295,25 +279,15 @@
         <div class="card-body text-center">
           <h4>Approval Actions</h4>
           <hr />
-          <div
-            class="d-flex flex-row flex-wrap justify-content-center align-items-start"
-          >
+          <div class="d-flex flex-row flex-wrap justify-content-center align-items-start">
             <div class="detailsCont m-2">
               <p class="d-flex justify-content-between">
-                <button
-                  class="btn btn-success btn-sm mx-3"
-                  type="button"
-                  (click)="approveReject(true)"
-                  [disabled]="studDetails['countyStage'] !== 'PENDING'"
-                >
+                <button class="btn btn-success btn-sm mx-3" type="button" (click)="approveReject(true)"
+                  [disabled]="studDetails['countyStage'] !== 'PENDING'">
                   Approve
                 </button>
-                <button
-                  class="btn btn-danger btn-sm mx-3"
-                  type="button"
-                  (click)="approveReject(false)"
-                  [disabled]="studDetails['countyStage'] !== 'PENDING'"
-                >
+                <button class="btn btn-danger btn-sm mx-3" type="button" (click)="approveReject(false)"
+                  [disabled]="studDetails['countyStage'] !== 'PENDING'">
                   Reject
                 </button>
               </p>
