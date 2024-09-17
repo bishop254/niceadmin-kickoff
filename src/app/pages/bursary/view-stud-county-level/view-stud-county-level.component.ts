@@ -43,8 +43,8 @@ export class ViewStudCountyLevelComponent {
   studRef: string = '';
 
   studDetails: any;
-  studWardStatus: any;
-  studCountyStatus: any;
+  studWardStatus: any = {};
+  studCountyStatus: any = {};
 
   constructor(
     private httpService: HttpServService,
