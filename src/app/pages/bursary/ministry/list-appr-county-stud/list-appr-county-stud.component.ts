@@ -15,6 +15,7 @@ import { GlobalServService } from 'src/app/shared/services/global-serv.service';
 import { HttpServService } from 'src/app/shared/services/http-serv.service';
 import { AddEditBursaryComponent } from '../../add-edit-bursary/add-edit-bursary.component';
 import { FinApprComponent } from '../../finance/fin-appr/fin-appr.component';
+import { ImportContactsComponent } from '../import-contacts/import-contacts.component';
 
 @Component({
   selector: 'app-list-appr-county-stud',
@@ -176,5 +177,27 @@ export class ListApprCountyStudComponent {
         'Select multiple students that will proceed to the next step'
       );
     }
+  }
+
+  importContacts() {
+    const initialState: ModalOptions = {
+      initialState: {
+        title: 'Import Students',
+        countyAppr: true,
+        studList: this.studentsToApprove,
+      },
+      class: 'modal-lg',
+    };
+    this.bsModalRef = this.modalService.show(
+      ImportContactsComponent,
+      initialState
+    );
+    this.bsModalRef.content.closeBtnName = 'Close';
+
+    this.bsModalRef.onHide?.subscribe((resp) => {
+      console.log(resp);
+
+      this.getIndividualData();
+    });
   }
 }

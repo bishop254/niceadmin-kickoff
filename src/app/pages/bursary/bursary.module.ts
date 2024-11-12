@@ -23,6 +23,7 @@ import { FinApprComponent } from './finance/fin-appr/fin-appr.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ListFinalApprStudComponent } from './finance/list-final-appr-stud/list-final-appr-stud.component';
 import { FinalApprCicComponent } from './finance/final-appr-cic/final-appr-cic.component';
+import { ImportContactsComponent } from './ministry/import-contacts/import-contacts.component';
 
 const bursariesRoutes: Routes = [
   { path: 'list-bulk-approvals', component: ListBulkApprovedComponent },
@@ -60,6 +61,7 @@ const bursariesRoutes: Routes = [
     FinApprComponent,
     ListFinalApprStudComponent,
     FinalApprCicComponent,
+    ImportContactsComponent,
   ],
   imports: [
     CommonModule,
