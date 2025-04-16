@@ -22,12 +22,12 @@ export class HttpCallsInterceptor implements HttpInterceptor {
 
     if (!request.url.includes('/login')) {
       const headers = new HttpHeaders({
-        'ngrok-skip-browser-warning': 'true',
+        // 'ngrok-skip-browser-warning': 'true',
         "Authorization": "Bearer " + localStorage.getItem('token')
       });
       request = request.clone({
         headers: headers,
-        withCredentials: true,
+        // withCredentials: true,
       });
     }
 
