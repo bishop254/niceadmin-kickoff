@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
 
         if (resp['statusCode'] === 201) {
           localStorage.setItem('email', email);
+          localStorage.setItem('token', resp['data']['token']);
           localStorage.setItem('profile', resp['data']['profile']);
           localStorage.setItem('ward', resp['data']['ward'] || '');
 
