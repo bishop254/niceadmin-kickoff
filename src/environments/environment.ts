@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  base_url: 'https://mig-bursary.com/',
-  auth_url: 'https://mig-bursary.com/',
+  base_url: 'https://mig-burs.com/',
+  auth_url: 'https://mig-burs.com/',
   // base_url: 'http://localhost:3000/',
   // auth_url: 'http://localhost:3001/',
 };
